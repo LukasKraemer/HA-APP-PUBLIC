@@ -1,3 +1,2 @@
-include ':commons-net-3.6'
 include ':app'
 rootProject.name = "HA-Analyse"
