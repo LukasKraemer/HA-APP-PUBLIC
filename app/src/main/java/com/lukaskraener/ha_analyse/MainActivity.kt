@@ -52,14 +52,8 @@ class MainActivity : AppCompatActivity() {
 
 
         try {
-            val mFtpClient = FTPClient()
-            mFtpClient.connect(ip, 22)
-            mFtpClient.login(user, pass)
-            mFtpClient.type = FTPClient.TYPE_BINARY
-            //mFtpClient.changeDirectory("/directory_path/")
-
-            //mFtpClient.upload(File("file_path"))
-            mFtpClient.disconnect(true)
+            smb.init(user,pass,ip)
+            smb.reader(user,pass,ip)
             return ("erfolgreich")
 
         } catch (e: Exception) {

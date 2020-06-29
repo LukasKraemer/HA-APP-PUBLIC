@@ -41,6 +41,12 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation files('libs/ftp4j-1.7.2.jar')
+    implementation files('libs/smbj-0.10.0.jar')
+    implementation files('libs/asn-one-0.4.0.jar')
+    implementation files('libs/bcprov-jdk15on-1.60.jar')
+    implementation files('libs/ftp4j-1.7.2.jar')
+    implementation files('libs/mbassador-1.3.0.jar')
+    implementation files('libs/slf4j-api-1.7.25.jar')
     files('/home/lukas/ftp4j-1.7.2.jar')
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
