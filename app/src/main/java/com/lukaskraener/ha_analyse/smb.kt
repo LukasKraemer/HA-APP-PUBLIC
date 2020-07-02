@@ -29,11 +29,15 @@ object smb {
 
     @Throws(IOException::class)
     fun reader(username: String?, passwort: String, ip: String?): Int {
+        var value: Int = 0
         try{
-
+            value = 0
         } catch (e: IOException) {
             e.message
-            return 1
+            value = -1
+        }
+        finally {
+            return value
         }
     }
 
