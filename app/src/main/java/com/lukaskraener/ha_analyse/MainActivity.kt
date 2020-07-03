@@ -18,7 +18,8 @@ class MainActivity : AppCompatActivity() {
     protected fun askPermissions() {
         val permissions = arrayOf(
             "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE"
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.INTERNET"
         )
         val requestCode = 200
         requestPermissions(permissions, requestCode)
@@ -42,8 +43,15 @@ class MainActivity : AppCompatActivity() {
 
         btn_uploader.setOnClickListener() {
             uploaderfertiganzeige.text = "gestartet"
-            val meldung: String = ftp_uplaoder(ftp_ip, ftp_numername, ftp_passwort)
-            uploaderfertiganzeige.text = meldung
+
+            try{
+                //uploaderfertiganzeige.text= ftp_uplaoder(ftp_ip,ftp_numername,ftp_passwort)
+
+            }
+            catch (e: Exception){
+                uploaderfertiganzeige.text= "fehler"
+            }
+
 
         }
         auswertung.setOnClickListener {
@@ -60,16 +68,13 @@ class MainActivity : AppCompatActivity() {
             nutzername: EditText,
             passwort: EditText
         ): String {
-
-
             val user: String = nutzername.text.toString()
             val pass: String = passwort.text.toString()
             val ip: String = adress.text.toString()
 
 
             return try {
-                smb.reader(user, pass, ip)
-                ("erfolgreich")
+                smb.test(user, pass,ip)
 
             } catch (e: Exception) {
                 ("Fehler")

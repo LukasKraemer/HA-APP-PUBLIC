@@ -3,14 +3,14 @@ package com.lukaskraener.ha_analyse
 import android.os.Environment
 import java.io.File
 
+
 object read_files {
     fun reader(): String? {
-        var path = ""
         var ausgabe: String
         var anzahl = 0
         return try {
-            path = Environment.getExternalStorageDirectory()
-                .toString() + "/_hybridassistant/TripData"
+
+            var path = Environment.getDataDirectory().toString() + "/_hybridassistant/TripData"
             val directory = File(path)
             val files = directory.listFiles()
             if (files != null) {
@@ -29,4 +29,5 @@ object read_files {
             e.message
         }
     }
+
 }
