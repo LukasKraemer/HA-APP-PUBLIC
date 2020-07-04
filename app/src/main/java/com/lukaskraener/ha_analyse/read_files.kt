@@ -24,7 +24,7 @@ object read_files {
             } else {
                 ausgabe = "keine Dateien"
             }
-            "Anzahl $anzahl $ausgabe"
+            "Anzahl $anzahl\n $ausgabe"
         } catch (e: Exception) {
             e.message
         }
