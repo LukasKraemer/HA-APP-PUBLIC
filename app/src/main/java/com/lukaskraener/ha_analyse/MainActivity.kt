@@ -1,17 +1,17 @@
 package com.lukaskraener.ha_analyse
 
+import android.Manifest
 import android.annotation.TargetApi
-import android.content.res.ColorStateList
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import java.net.URL
-
+import androidx.core.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
     protected fun shouldAskPermissions(): Boolean {
@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
             "android.permission.INTERNET",
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"
-
-
         )
         val requestCode = 200
         requestPermissions(permissions, requestCode)
@@ -47,57 +45,56 @@ class MainActivity : AppCompatActivity() {
         val auswertung = findViewById(R.id.btn_auswertung) as Button
         val uploaderfertiganzeige = findViewById<TextView>(R.id.tv_uplaoder_fertig)
         val anzeige_oben = findViewById<TextView>(R.id.tv_sache_res)
+        var internet: String = ""
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            internet = "true"
+        }else{
+            internet = "false"
+    }
+
+
 
         btn_uploader.setOnClickListener() {
             uploaderfertiganzeige.text = "gestartet"
 
             try{
-                uploaderfertiganzeige.text = MultipartFileUploader.uploader().toString()
-                //uploaderfertiganzeige.text= ftp_uplaoder(upload_ip)
-
+                //uploaderfertiganzeige.text = MultipartFileUploader.uploader().toString()
+                uploaderfertiganzeige.text= ftp_uplaoder(upload_ip,upload_numername,upload_passwort)
             }
             catch (e: Exception){
                 uploaderfertiganzeige.text= "fehler"
             }
-
-
         }
         auswertung.setOnClickListener {
-            //wb1.loadUrl("https://google.com")
+            anzeige_oben.text = "internet: "+internet
+            val openURL = Intent(Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("https://yarix.ddns.net")
+            startActivity(openURL)
         }
         btn_search.setOnClickListener {
             anzeige_oben.text = read_files.reader().toString()
-
         }
     }
 
         private fun ftp_uplaoder(
-            adress: EditText
+            adress: EditText,
+            user: EditText,
+            pass: EditText
 
         ): String {
-
-            val ip: String = adress.text.toString()
-
-
-            var fehler: Int =0
-            return try {
-                var adresse = URL("http://192.168.178.76/test.php")
-                fehler =1
-                var http = fileuploader(adresse)
-                fehler=2
-                http.addFormField("name", "Lukas")
-                fehler=3
-                http.addHeaderField("vornname","krämer")
-                fehler=4
-                http.upload(null)
-                fehler=5
-                //smb.test(user, pass,ip)
-                "erfolgreich"
-            } catch (e: Exception) {
-                return fehler.toString()
+            try {
+                val uploader = FTPUploader(
+                    adress.toString(),
+                    user.toString(),
+                    pass.toString())
+                //uploader.connect()
+                //uploader.uploadFile("test", "geg", "/")
+                //uploader.disconnect()
+                return "Erfolgreich"
+            }catch (e: Exception){
+                return "Fehler"
             }
-
-
         }
 
     }
