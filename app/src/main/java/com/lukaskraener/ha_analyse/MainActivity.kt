@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
                     adress.toString(),
                     user.toString(),
                     pass.toString())
-                //uploader.connect()
+                uploader.connect()
                 //uploader.uploadFile("test", "geg", "/")
-                //uploader.disconnect()
+                uploader.disconnect()
                 return "Erfolgreich"
             }catch (e: Exception){
                 return "Fehler"
