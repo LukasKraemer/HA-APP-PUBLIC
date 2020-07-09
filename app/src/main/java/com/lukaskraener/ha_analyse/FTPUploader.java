@@ -71,19 +71,4 @@ public class FTPUploader {
             }
         }
     }
-
-    /*
-    public static void main(String[] args) throws Exception {
-        System.out.println("Start");
-        FTPUploader ftpUploader = new FTPUploader(this., "ftpUser", "ftpPassword");
-        //FTP server path is relative. So if FTP account HOME directory is "/home/pankaj/public_html/" and you need to upload
-        // files to "/home/pankaj/public_html/wp-content/uploads/image2/", you should pass directory parameter as "/wp-content/uploads/image2/"
-        ftpUploader.uploadFile("D:\\Pankaj\\images\\MyImage.png", "image.png", "/wp-content/uploads/image2/");
-        ftpUploader.disconnect();
-        System.out.println("Done");
-    }*/
-
-
-
-
 }

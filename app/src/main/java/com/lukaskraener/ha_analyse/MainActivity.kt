@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
+
+    //frägt alle Rechte ab
     protected fun shouldAskPermissions(): Boolean {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
     }
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         if (shouldAskPermissions()) {
             askPermissions()
         }
+        //Elemente der Gui einladen
         val btn_uploader = findViewById(R.id.btn_upload) as Button
         val btn_search = findViewById(R.id.btn_search) as Button
         val upload_numername = findViewById(R.id.input_nutzername) as EditText
@@ -45,9 +48,10 @@ class MainActivity : AppCompatActivity() {
         val auswertung = findViewById(R.id.btn_auswertung) as Button
         val uploaderfertiganzeige = findViewById<TextView>(R.id.tv_uplaoder_fertig)
         val anzeige_oben = findViewById<TextView>(R.id.tv_sache_res)
+
+        //überprüfung ob er das Recht internet hat
         var internet: String = ""
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED){
             internet = "true"
         }else{
             internet = "false"
@@ -56,17 +60,19 @@ class MainActivity : AppCompatActivity() {
 
 
         btn_uploader.setOnClickListener() {
+            //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
 
             try{
-                //uploaderfertiganzeige.text = MultipartFileUploader.uploader().toString()
                 uploaderfertiganzeige.text= ftp_uplaoder(upload_ip,upload_numername,upload_passwort)
             }
             catch (e: Exception){
                 uploaderfertiganzeige.text= "fehler"
             }
         }
+
         auswertung.setOnClickListener {
+            //knoof unten "zur Auswertung"
             anzeige_oben.text = "internet: "+internet
             val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse("https://yarix.ddns.net")
