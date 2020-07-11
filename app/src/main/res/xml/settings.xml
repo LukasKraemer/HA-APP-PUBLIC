@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme">
+
+    <PreferenceCategory android:title="FTP">
+
+        <EditTextPreference
+            android:background="@color/brackground1"
+            android:backgroundTint="@color/brackground2"
+            android:defaultValue="root"
+            android:foregroundTint="@color/Schriftfarbe"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:key="key_ftp_nutzername"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="root"
+            android:title="Nutzername" />
+
+        <EditTextPreference
+            android:defaultValue="test"
+            android:icon="@drawable/ic_baseline_vpn_key_24"
+            android:key="key_ftp_passwort"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="***********"
+            android:title="Passwort"
+            android:visibility="visible" />
+        <EditTextPreference
+            android:defaultValue="localhost"
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
+            android:key="key_ftp_ip"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="localhost"
+            android:title="Ip-adresse" />
+        <EditTextPreference
+            android:defaultValue="21"
+            android:icon="@drawable/ic_baseline_post_add_24"
+            android:key="key_ftp_port"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="21"
+            android:title="Port" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Python Programm">
+
+        <EditTextPreference
+            android:defaultValue="Database"
+            android:key="key_py_user"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Database"
+            android:title="Datenbank Nutzername" />
+        <EditTextPreference
+            android:defaultValue="pwd"
+            android:key="key_py_pwd"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="****"
+            android:title="Datenbank Passwort" />
+        <EditTextPreference
+            android:defaultValue="1.1.1.1"
+            android:key="key_py_ip"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="1.1.1.1"
+            android:title="Datenbank IP" />
+        <EditTextPreference
+            android:defaultValue="3306"
+            android:key="key_py_port"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="3306"
+            android:title="Datenbank Port" />
+        <EditTextPreference
+            android:defaultValue="car"
+            android:key="key_py_schema"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="car"
+            android:title="Schema" />
+        <EditTextPreference
+            android:defaultValue="beide"
+            android:key="key_py_program"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="beide"
+            android:title="Programmauswahl" />
+        <EditTextPreference
+            android:defaultValue='"1"'
+            android:key="key_py_prozess"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Prozessanzahl" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Auswertung">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:icon="@drawable/ic_baseline_web_24"
+            android:key="key_auswertung_url"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary=""
+            android:title="IP Adresse der Auswertung"
+            app:defaultValue="1.1.1.1" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

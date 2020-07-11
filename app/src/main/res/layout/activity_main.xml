@@ -8,157 +8,18 @@
     android:textAlignment="center"
     android:visibility="visible"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/btn_auswertung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="15dp"
-        android:background="#3e4f4e"
-        android:backgroundTint="#3e4f4e"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Öffne Auswertung"
-        android:textColor="#26b839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_upload" />
-
-    <TextView
-        android:id="@+id/tv_uplaoder_fertig"
-        android:layout_width="125dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="40dp"
-        android:background="#3e4f4e"
-        android:paddingTop="10dp"
-        android:text="nicht gestartet"
-        android:textAlignment="center"
-        android:textColor="#26b839"
-        android:textSize="18sp"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_passwort" />
-
-    <TextView
-        android:id="@+id/tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:text="Passwort"
-        android:textColor="#26b839"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nutzername" />
-
-    <TextView
-        android:id="@+id/tv_nutzername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:text="Nutzername"
-        android:textColor="#26b839"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ip" />
-
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:background="#465a6b"
-        android:backgroundTint="#3e4f4e"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="suche nach .txt Datei"
-        android:textColor="#26b839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_sache_res"
-        android:layout_width="125dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="50dp"
-        android:paddingTop="10dp"
-        android:text="nicht gesucht"
-        android:textAlignment="center"
-        android:textColor="#26b839"
-        android:textColorHighlight="#26b839"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_search"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/input_ip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="test.rebex.net"
-        android:textColor="#26b839"
-        app:layout_constraintBottom_toTopOf="@+id/input_nutzername"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
-
-    <EditText
-        android:id="@+id/input_passwort"
-        android:layout_width="212dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="#26b839"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_nutzername" />
-
-    <EditText
-        android:id="@+id/input_nutzername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="demo"
-        android:textColor="#26b839"
-        app:layout_constraintBottom_toTopOf="@+id/input_passwort"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_ip" />
-
-    <TextView
-        android:id="@+id/tv_ip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="48dp"
-        android:text="IP Adresse"
-        android:textColor="#26b839"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
-
-    <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="25dp"
-        android:background="#465a6b"
-        android:backgroundTint="#3e4f4e"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Start Upload"
-        android:textColor="#26b839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

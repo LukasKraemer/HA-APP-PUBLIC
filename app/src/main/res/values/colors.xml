@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008f6b</color>
     <color name="colorPrimaryDark">#008f6b</color>
     <color name="colorAccent">#008f6b</color>
+    <color name="manuel1">#008f6b</color>
+    <color name="manuel2">#008f6b</color>
+    <color name="manuel3">#008f6b</color>
+    <color name="brackground1">#202125</color>
+    <color name="brackground2">#1D1D20</color>
+    <color name="Schriftfarbe">#b4b4b4</color>
+    <color name="hintergrnd_elemente">#008f6b</color>
+    <color name="head">#202125</color>
+    <color name="vektor">#008f6b</color>
 </resources>
