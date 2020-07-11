@@ -43,11 +43,11 @@
             android:summary="21"
             android:title="Port" />
     </PreferenceCategory>
-    <!--
     <PreferenceCategory android:title="Python Programm">
 
         <EditTextPreference
             android:defaultValue="Database"
+            android:icon="@drawable/ic_baseline_account_circle_24"
             android:key="key_py_user"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -55,6 +55,7 @@
             android:title="Datenbank Nutzername" />
         <EditTextPreference
             android:defaultValue="pwd"
+            android:icon="@drawable/ic_baseline_vpn_key_24"
             android:key="key_py_pwd"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -62,40 +63,40 @@
             android:title="Datenbank Passwort" />
         <EditTextPreference
             android:defaultValue="1.1.1.1"
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
             android:key="key_py_ip"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="1.1.1.1"
             android:title="Datenbank IP" />
+
         <EditTextPreference
-            android:defaultValue="3306"
+            android:defaultValue="portnummer"
+            android:icon="@drawable/ic_baseline_post_add_24"
             android:key="key_py_port"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="3306"
             android:title="Datenbank Port" />
-        <EditTextPreference
-            android:defaultValue="car"
-            android:key="key_py_schema"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="car"
-            android:title="Schema" />
+
         <EditTextPreference
             android:defaultValue="beide"
+            android:icon="@drawable/ic_baseline_apps_24"
             android:key="key_py_program"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="beide"
             android:title="Programmauswahl" />
+
         <EditTextPreference
             android:defaultValue='"1"'
+            android:icon="@drawable/ic_baseline_all_inbox_24"
             android:key="key_py_prozess"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Prozessanzahl" />
     </PreferenceCategory>
-    -->
+
     <PreferenceCategory android:title="Auswertung">
 
         <EditTextPreference
