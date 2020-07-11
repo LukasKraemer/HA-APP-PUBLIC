@@ -18,6 +18,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private  var preftpip:EditTextPreference? = null
     private  var preftpport:EditTextPreference? = null
     private  var preauswertungip:EditTextPreference? = null
+
+    /*
     private  var prepyip:EditTextPreference? = null
     private  var prepyuser:EditTextPreference? = null
     private  var prepypwd:EditTextPreference? = null
@@ -25,7 +27,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private  var prepyschema:EditTextPreference? = null
     private  var prepyprozess:EditTextPreference? = null
     private  var prepyprogram:EditTextPreference? = null
-
+*/
     //values:
     private  lateinit var sharedPreference: SharedPreferences
     private var ftpuser = ""
@@ -33,6 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var ftpip = ""
     private var ftpport = ""
     private var auswertungip = ""
+    /*
     private  var pyip = ""
     private  var pyuser = ""
     private  var pypwd = ""
@@ -40,6 +43,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private  var pyschema = ""
     private  var pyprozess = ""
     private var pyprogram = ""
+    */
+
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
@@ -49,6 +54,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preftpip= findPreference("key_ftp_ip")
         preftpport= findPreference("key_ftp_port")
         preauswertungip = findPreference("key_auswertung_url")
+        /*
         prepyuser =findPreference("key_py_user")
         prepyip = findPreference("key_py_ip")
         prepypwd = findPreference("key_py_pwd")
@@ -56,7 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyschema = findPreference("key_py_schema")
         prepyprozess = findPreference("key_py_prozess")
         prepyprogram = findPreference("key_py_program")
-
+*/
 
 loadDatafromPreferences()
 
@@ -75,7 +81,7 @@ editText.inputType = InputType.TYPE_CLASS_TEXT
 preauswertungip?.setOnBindEditTextListener { editText ->
 editText.inputType = InputType.TYPE_CLASS_TEXT
 }
-
+/*
 prepyuser?.setOnBindEditTextListener { editText ->
 editText.inputType = InputType.TYPE_CLASS_TEXT
 }
@@ -98,7 +104,7 @@ prepyschema?.setOnBindEditTextListener { editText ->
 editText.inputType = InputType.TYPE_CLASS_TEXT
 }
 
-
+*/
 
 preftpuser?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 preftpport?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
@@ -114,14 +120,14 @@ if(TextUtils.isEmpty(text)){
 }
 
 }
-
+/*
 prepyuser?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 prepypwd?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 prepyip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 prepyschema?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 prepyprogram?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 prepyprozess?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-
+*/
 }
 
 private fun loadDatafromPreferences(){
@@ -131,7 +137,7 @@ ftppwd = sharedPreference.getString("key_ftp_passwort", "")!!
 ftpip = sharedPreference.getString("key_ftp_ip", "")!!
 ftpport = sharedPreference.getString("key_ftp_port", "")!!
 auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
-
+/*
 pyuser = sharedPreference.getString("key_py_user", "")!!
 pypwd = sharedPreference.getString("key_py_pwd", "")!!
 pyip = sharedPreference.getString("key_py_ip", "")!!
@@ -140,6 +146,6 @@ pyprogram = sharedPreference.getString("key_py_program", "")!!
 pyprozess = sharedPreference.getString("key_py_prozess", "")!!
 
 pyport = sharedPreference.getString("key_py_port", "")!!
-
+*/
 }
 }

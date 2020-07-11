@@ -43,6 +43,7 @@
             android:summary="21"
             android:title="Port" />
     </PreferenceCategory>
+    <!--
     <PreferenceCategory android:title="Python Programm">
 
         <EditTextPreference
@@ -94,6 +95,7 @@
             android:singleLine="true"
             android:title="Prozessanzahl" />
     </PreferenceCategory>
+    -->
     <PreferenceCategory android:title="Auswertung">
 
         <EditTextPreference
