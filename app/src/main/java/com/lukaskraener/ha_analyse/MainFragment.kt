@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
+import java.nio.file.Files
 
 
 class MainFragment : Fragment() {
@@ -74,13 +75,15 @@ class MainFragment : Fragment() {
 
         btn_calc.setOnClickListener {
             tv_calc_fertig.text = "gestartet"
+
         }
         btn_uploader.setOnClickListener {
-
+            //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
             try {
-                var ftp= ftp_uplaoder(this.ftpip, this.ftpuser, this.ftppwd, port = this.ftpport.toInt())
-                uploaderfertiganzeige.text =ftp
+                var ftp= ftp_uplaoder(this.ftpip, this.ftpuser, this.ftppwd, port = this.ftpport.toInt()
+                )
+                uploaderfertiganzeige.text = ftp
             } catch (e: Exception) {
                 uploaderfertiganzeige.text = e.message
             }
@@ -97,14 +100,11 @@ class MainFragment : Fragment() {
         btn_switch.setOnClickListener {
             findNavController().navigate(R.id.settingsFragment)
         }
-
-
         return rootview
     }//onview Close
 
     private fun ftp_uplaoder(
-        adress: String, user: String, pwd: String, port: Int = 21): String {
-        return try {
+        adress: String, user: String, pwd: String, port: Int = 21): String { return try {
             val uploader = FTPUploader(adress,user, pwd, port)
             if (uploader.connect()){
                 //uploader.uploadFile("test", "geg", "/")
@@ -115,13 +115,21 @@ class MainFragment : Fragment() {
         }
     }
     private fun filereader(anzeige:TextView ): Array<File>? {
-        var ausgabe =""
-        var anzahl = 0
-        val files = read_files.reader()
-        if (files != null) {if (files.size > 0) {for (i in 1 until files.size) {ausgabe += files[i].name
-                    anzahl += 1 } }
-            anzeige.text= "Anzahl $anzahl\n $ausgabe"} else {anzeige.text="keine Dateien gefunden" }
-        return files
+            var ausgabe = ""
+            var anzahl = 0
+            var files = read_files.reader()
+            try {
+                if (files != null) {
+                if (files.size > 0) {
+                    for (i in 1 until files.size) {
+                        ausgabe += files[i].name
+                        anzahl += 1
+                    } }
+                anzeige.text = "Anzahl $anzahl\n $ausgabe" } else {
+                    anzeige.text = "keine Dateien gefunden"
+            } }catch (e: java.lang.Exception){
+            anzeige.text = "keine Dateien gefunden"
+        }return files
     }
 }
 

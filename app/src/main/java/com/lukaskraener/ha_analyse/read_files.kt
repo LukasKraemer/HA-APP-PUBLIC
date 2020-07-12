@@ -11,6 +11,5 @@ object read_files {
         val directory = File(path)
         val files = directory.listFiles()
         return files
-
     }
 }
