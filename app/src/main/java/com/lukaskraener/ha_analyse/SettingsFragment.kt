@@ -85,7 +85,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         editText.inputType = InputType.TYPE_CLASS_TEXT
         }
         prepyport?.setOnBindEditTextListener { editText ->
-        editText.inputType = InputType.TYPE_CLASS_TEXT
+        editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
         prepyprogram?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
@@ -93,9 +93,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyprozess?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
-
-
-
 
         preftpuser?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         preftpport?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()

@@ -10,20 +10,20 @@ import org.apache.commons.net.ftp.*;
 
 public class FTPUploader {
     FTPClient ftp = null;
-    String server = null;
-    String user = null;
-    String pass = null;
+    String server = "";
+    String user = "";
+    String pass = "";
     int port = 21;
 
 
-    public FTPUploader(String host, String user, String pass, int... Port){
+    public FTPUploader(String host, String user, String pass, int Port){
         this.server = host;
         this.user = user;
         this.pass = pass;
-        this.port = port;
+        this.port = Port;
     }
 
-    public  void connect(){
+    public boolean connect(){
 
         this.ftp = new FTPClient();
         try {
@@ -35,12 +35,14 @@ public class FTPUploader {
             //showServerReply(ftpClient);
             if (!success) {
                 //
-                return;
+                return success;
             } else {
                 //
             }
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
+            return false;
         }
     }
 
