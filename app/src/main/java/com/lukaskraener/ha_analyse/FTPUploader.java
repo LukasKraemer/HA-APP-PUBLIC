@@ -61,16 +61,5 @@ public class FTPUploader {
         }
     }
 
-    private static void showServerReply(FTPClient ftpClient) {
-        System.out.println("1");
-        String[] replies = ftpClient.getReplyStrings();
-        System.out.println("2");
-        if (replies != null && replies.length > 0) {
-            System.out.println("2a");
-            for (String aReply : replies) {
-                System.out.println("SERVER: " + aReply);
-                System.out.println("3");
-            }
-        }
-    }
+
 }

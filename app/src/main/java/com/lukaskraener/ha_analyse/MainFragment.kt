@@ -68,7 +68,7 @@ class MainFragment : Fragment() {
         val btn_search = rootview.findViewById(R.id.btn_search) as ImageView
         val auswertung = rootview.findViewById(R.id.btn_auswertung) as Button
         val anzeige_oben = rootview.findViewById<TextView>(R.id.tv_anzeige_oben)
-        val uploaderfertiganzeige: TextView = rootview.findViewById(R.id.tv_uploader_fertig)
+        var uploaderfertiganzeige: TextView = rootview.findViewById(R.id.tv_uploader_fertig)
         val btn_calc: ImageView = rootview.findViewById(R.id.btn_calc)
         val tv_calc_fertig: TextView = rootview.findViewById(R.id.tv_calc_fertig)
 
@@ -77,15 +77,14 @@ class MainFragment : Fragment() {
             tv_calc_fertig.text = "gestartet"
 
         }
-        btn_uploader.setOnClickListener {
+        btn_uploader.setOnClickListener() {
             //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
-            try {
-                var ftp= ftp_uplaoder(this.ftpip, this.ftpuser, this.ftppwd, port = this.ftpport.toInt()
-                )
-                uploaderfertiganzeige.text = ftp
-            } catch (e: Exception) {
-                uploaderfertiganzeige.text = e.message
+
+            if (ftp_uplaoder(uploaderfertiganzeige)){
+                uploaderfertiganzeige.text = "Erfolgreich"
+            }else{
+                uploaderfertiganzeige.text = "Fehler"
             }
         }
 
@@ -103,33 +102,23 @@ class MainFragment : Fragment() {
         return rootview
     }//onview Close
 
-    private fun ftp_uplaoder(
-        adress: String, user: String, pwd: String, port: Int = 21): String { return try {
-            val uploader = FTPUploader(adress,user, pwd, port)
-            if (uploader.connect()){
-                //uploader.uploadFile("test", "geg", "/")
-                //uploader.disconnect()
-                "connect" }else{ "nicht connectet"}
+    private fun ftp_uplaoder(anzeige: TextView): Boolean {
+           try{
+            val ftp = FTPUploader(this.ftpip,this.ftpuser, this.ftppwd,this.ftpport.toInt())
+                ftp.connect()
+
+               return true
         } catch (e: Exception) {
-            e.message.toString()
+               anzeige.text =e.message.toString()
+               return false
         }
     }
-    private fun filereader(anzeige:TextView ): Array<File>? {
-            var ausgabe = ""
-            var anzahl = 0
-            var files = read_files.reader()
-            try {
-                if (files != null) {
-                if (files.size > 0) {
-                    for (i in 1 until files.size) {
-                        ausgabe += files[i].name
-                        anzahl += 1
-                    } }
-                anzeige.text = "Anzahl $anzahl\n $ausgabe" } else {
-                    anzeige.text = "keine Dateien gefunden"
-            } }catch (e: java.lang.Exception){
-            anzeige.text = "keine Dateien gefunden"
-        }return files
+    private fun filereader(anzeige : TextView){
+        val prozess = Read_files()
+        anzeige.text = prozess.reader().toString()
     }
+
+
+
 }
 
