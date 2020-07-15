@@ -133,6 +133,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         ftppwd = sharedPreference.getString("key_ftp_passwort", "")!!
         ftpip = sharedPreference.getString("key_ftp_ip", "")!!
         ftpport = sharedPreference.getString("key_ftp_port", "")!!
+
         auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
 
         pyuser = sharedPreference.getString("key_py_user", "")!!

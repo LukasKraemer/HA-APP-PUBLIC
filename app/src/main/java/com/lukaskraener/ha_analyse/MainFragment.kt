@@ -53,13 +53,27 @@ class MainFragment : Fragment() {
 
 
     }
+    protected fun shouldAskPermissions(): Boolean {
+        return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
+    }
 
+    @TargetApi(23)
+    protected fun askPermissions() {
+        val permissions = arrayOf(
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+        )
+        val requestCode = 200
+        requestPermissions(permissions, requestCode)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
+        if (shouldAskPermissions()) {
+            askPermissions()
+        }
         rootview = inflater.inflate(R.layout.fragment_main, container, false)
         loadDatafromPreferences()
         val btn_switch: FloatingActionButton = rootview.findViewById(R.id.btn_switch)
@@ -104,7 +118,7 @@ class MainFragment : Fragment() {
 
     private fun ftp_uplaoder(anzeige: TextView): Boolean {
            try{
-            val ftp = FTPUploader(this.ftpip,this.ftpuser, this.ftppwd,this.ftpport.toInt())
+            val ftp = FTPUploader()
                 ftp.connect()
 
                return true

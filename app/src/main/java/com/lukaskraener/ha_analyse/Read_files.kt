@@ -13,8 +13,7 @@ class Read_files {
         var anzahl = 0
         val regex ="Trip_[a-zA-z0-9_-]*.txt".toRegex()
         return try {
-            path = Environment.getExternalStorageDirectory()
-                .toString() + "/_hybridassistant/TripData"
+            path = Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData"
             val directory = File(path)
             val files = directory.listFiles()
             if (files != null) {
@@ -28,13 +27,24 @@ class Read_files {
                     }
                     this.founded= foundedFilesfromst.toArray()
                 }
-            } else {
-                ausgabe = "keine Dateien"
-            }
+                localFiles = foundes
+                serverFiles = loaddifffromServer()
+                return creatediff(localFiles, ServerFiles)
 
-            "Anzahl $anzahl \n $ausgabe"
+    }
+    fun loaddifffromServer(){
+
+    }
+    fun creatediff(local: Array<Files>?, server: Array<Files>?){
+       try return{
+        var diff = local-server
+        if (diff != null){
+            if(diff.size => 0){ "Es wurden "+ diff.size + " neue Dateien gefunden" }else{ "keine neunen Dateien" }
+
+        }else{"keine Daten gefunden" }
+
         } catch (e: Exception) {
-            e.message
+            e.message.toString()
         }
     }
 }

@@ -9,11 +9,11 @@ import org.apache.commons.net.ftp.*;
 
 
 public class FTPUploader {
-    FTPClient ftp;
-    String server;
-    String user;
-    String pass;
-    int port;
+    private FTPClient ftp;
+    private String server;
+    private String user;
+    private String pass;
+    private int port;
 
 
     public FTPUploader(String host, String user, String pass, int Port){
