@@ -12,6 +12,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 
 
 class MainFragment : Fragment() {
@@ -37,6 +40,12 @@ class MainFragment : Fragment() {
 
         btn_calc.setOnClickListener{
             tv_calc_fertig.text = "gestartet"
+            val client: OkHttpClient = OkHttpClient()
+            val url:String = "https://google.com"
+            val request: Request  = Request.Builder()
+                .url(url)
+                .build()
+
         }
 
         btn_uploader.setOnClickListener {
@@ -64,8 +73,6 @@ class MainFragment : Fragment() {
 
             anzeige_oben.text = read_files.reader()
         }
-
-
 
         btn_switch.setOnClickListener {
             try {
