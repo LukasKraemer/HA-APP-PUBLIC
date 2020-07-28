@@ -11,20 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_main.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
-import java.io.File
-import java.nio.file.Files
-
 
 
 class MainFragment : Fragment() {
@@ -107,7 +101,13 @@ class MainFragment : Fragment() {
             //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
 
-            if (ftp_uplaoder(uploaderfertiganzeige, ftpip,ftpuser,ftppwd,port = 21)){
+            if (ftpUplaoder(
+                    uploaderfertiganzeige,
+                    this.ftpip,
+                    this.ftpuser,
+                    this.ftppwd,
+                    port = 21
+                )){
                 uploaderfertiganzeige.text = "Erfolgreich"
             }else{
                 uploaderfertiganzeige.text = "Fehler"
@@ -129,7 +129,7 @@ class MainFragment : Fragment() {
         return rootview
     }//onview Close
 
-    private fun ftp_uplaoder(
+    private fun ftpUplaoder(
         anzeige: TextView,
         adress: String,
         user: String,

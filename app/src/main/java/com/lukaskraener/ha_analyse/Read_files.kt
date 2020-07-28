@@ -39,7 +39,8 @@ class Read_files() {
         var localFiles: Array<Any>? = founded
         val ServerFiles = loaddifffromServer()
         //return creatediff(localFiles, ServerFiles)
-    anzeige.text="geht"
+    anzeige.text= "Es wurden "+ anzahl.toString() + " \n Dateien gefunden"
+        //Debugging ausgabe, testweise für die Git schulung geändert
     }
 
     fun loaddifffromServer(): ByteArray {
