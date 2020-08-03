@@ -9,7 +9,7 @@ import java.lang.Exception
 
 class Readfiles() {
 
-    fun reader(): Array<Any>? {
+    fun reader(){
         var founded: Array<Any>? = null
         var foundedFilesfromst: ArrayList<File> = ArrayList()
         var path = ""
@@ -33,8 +33,6 @@ class Readfiles() {
                 founded = foundedFilesfromst.toArray()
             }
         }
-
-        return founded
     }
 
     fun creatediff(local: Array<Any>?, server: ByteArray): Array<Any>? {

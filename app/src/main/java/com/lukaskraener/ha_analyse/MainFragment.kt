@@ -92,7 +92,9 @@ class MainFragment : Fragment() {
         btn_uploader.setOnClickListener() {
             //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
+
             uploader(ftptoken,ftpip)
+
         }
 
         auswertung.setOnClickListener {
@@ -114,6 +116,7 @@ class MainFragment : Fragment() {
         API().reader(token,ip)
 
         return "Erfolgreich"
+
     }
     private fun filereader(anzeige : TextView){
         var speicher = Readfiles().reader()
