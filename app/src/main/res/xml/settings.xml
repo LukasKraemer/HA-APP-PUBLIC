@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme">
 
-    <PreferenceCategory android:title="FTP">
+    <PreferenceCategory android:title="API">
 
         <EditTextPreference
             android:background="@color/brackground1"
@@ -42,6 +42,14 @@
             android:singleLine="true"
             android:summary="21"
             android:title="Port" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_baseline_vpn_key_24"
+            android:key="key_ftp_token"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="0"
+            android:title="Token" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Python Programm">
 
@@ -94,6 +102,7 @@
             android:key="key_py_prozess"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:summary="1"
             android:title="Prozessanzahl" />
     </PreferenceCategory>
 

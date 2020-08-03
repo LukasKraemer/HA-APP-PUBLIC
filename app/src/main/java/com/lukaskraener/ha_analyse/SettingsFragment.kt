@@ -17,6 +17,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private  var preftppwd:EditTextPreference? = null
     private  var preftpip:EditTextPreference? = null
     private  var preftpport:EditTextPreference? = null
+    private  var preftptoken:EditTextPreference? = null
     private  var preauswertungip:EditTextPreference? = null
     private  var prepyip:EditTextPreference? = null
     private  var prepyuser:EditTextPreference? = null
@@ -31,6 +32,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var ftppwd = ""
     private var ftpip = ""
     private var ftpport = ""
+    private var ftptoken = ""
     private var auswertungip = ""
     private  var pyip = ""
     private  var pyuser = ""
@@ -48,6 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preftppwd= findPreference("key_ftp_passwort")
         preftpip= findPreference("key_ftp_ip")
         preftpport= findPreference("key_ftp_port")
+        preftptoken= findPreference("key_ftp_token")
         preauswertungip = findPreference("key_auswertung_url")
 
         prepyuser =findPreference("key_py_user")
@@ -70,6 +73,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         preftpip?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
+        }
+        preftptoken?.setOnBindEditTextListener { editText ->
+            editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
         }
         preauswertungip?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
@@ -106,6 +112,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
           val value = "*".repeat(text.length)
           value
         }
+        }
+        preftptoken?.summaryProvider= Preference.SummaryProvider<EditTextPreference> {preference ->
+            val text = preference.text
+            if(TextUtils.isEmpty(text)){
+                "Kein Token wurde gesetzt"
+            }else{
+                val value = "*".repeat(text.length)
+                value
+            }
 
         }
 
@@ -133,7 +148,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         ftppwd = sharedPreference.getString("key_ftp_passwort", "")!!
         ftpip = sharedPreference.getString("key_ftp_ip", "")!!
         ftpport = sharedPreference.getString("key_ftp_port", "")!!
-
+        ftptoken = sharedPreference.getString("key_ftp_token", "")!!
         auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
 
         pyuser = sharedPreference.getString("key_py_user", "")!!
