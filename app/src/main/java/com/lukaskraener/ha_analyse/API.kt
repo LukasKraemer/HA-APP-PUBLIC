@@ -1,19 +1,15 @@
 package com.lukaskraener.ha_analyse
 
+
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.MultipartBody.Part.Companion.create
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONArray
 import java.io.File
 import java.io.IOException
 
 
 class API {
 
-    private lateinit var dbjson: JSONArray
     fun reader( token: String, url: String){
         val formBody: RequestBody = FormBody.Builder()
             .add("APP", "reader")
@@ -21,7 +17,6 @@ class API {
             .build()
 
         posttoServer(url, formBody)
-        //return this.dbjson.length().toString()
     }
 
     fun uploader(url:String, filePath:String): String {

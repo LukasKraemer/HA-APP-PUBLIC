@@ -6,42 +6,19 @@
     <PreferenceCategory android:title="API">
 
         <EditTextPreference
-            android:background="@color/brackground1"
-            android:backgroundTint="@color/brackground2"
-            android:defaultValue="root"
-            android:foregroundTint="@color/Schriftfarbe"
-            android:icon="@drawable/ic_baseline_account_circle_24"
-            android:key="key_ftp_nutzername"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="root"
-            android:title="Nutzername" />
-
-        <EditTextPreference
-            android:defaultValue="test"
-            android:icon="@drawable/ic_baseline_vpn_key_24"
-            android:key="key_ftp_passwort"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="***********"
-            android:title="Passwort"
-            android:visibility="visible" />
-        <EditTextPreference
-            android:defaultValue="localhost"
+            android:defaultValue="129.168.10.10"
             android:icon="@drawable/ic_baseline_cloud_upload_24"
-            android:key="key_ftp_ip"
+            android:key="key_api_ip"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="localhost"
-            android:title="Ip-adresse" />
-        <EditTextPreference
-            android:defaultValue="21"
-            android:icon="@drawable/ic_baseline_post_add_24"
-            android:key="key_ftp_port"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="21"
-            android:title="Port" />
+            android:summary="129.168.10.10"
+            android:title="Ip-Adresse" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_baseline_https_24"
+            android:key="key_api_protokoll"
+            android:summary="Server muss SSL unterstützen"
+            android:title="HTTPS?" />
         <EditTextPreference
             android:defaultValue="0"
             android:icon="@drawable/ic_baseline_vpn_key_24"

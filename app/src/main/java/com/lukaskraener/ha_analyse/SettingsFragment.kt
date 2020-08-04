@@ -4,20 +4,15 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
-import androidx.preference.EditTextPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
+import androidx.preference.*
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     //userdata
-    private  var preftpuser:EditTextPreference? = null
-    private  var preftppwd:EditTextPreference? = null
-    private  var preftpip:EditTextPreference? = null
-    private  var preftpport:EditTextPreference? = null
-    private  var preftptoken:EditTextPreference? = null
+    private  var preapiip:EditTextPreference? = null
+    private  var preapiprotokoll:SwitchPreference? = null
+    private  var preapitoken:EditTextPreference? = null
     private  var preauswertungip:EditTextPreference? = null
     private  var prepyip:EditTextPreference? = null
     private  var prepyuser:EditTextPreference? = null
@@ -28,11 +23,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     //values:
     private  lateinit var sharedPreference: SharedPreferences
-    private var ftpuser = ""
-    private var ftppwd = ""
-    private var ftpip = ""
-    private var ftpport = ""
-    private var ftptoken = ""
+    private var apipip = ""
+    private var apiprotokoll = ""
+    private var apitoken = ""
     private var auswertungip = ""
     private  var pyip = ""
     private  var pyuser = ""
@@ -46,11 +39,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
-        preftpuser= findPreference("key_ftp_nutzername")
-        preftppwd= findPreference("key_ftp_passwort")
-        preftpip= findPreference("key_ftp_ip")
-        preftpport= findPreference("key_ftp_port")
-        preftptoken= findPreference("key_ftp_token")
+        preapiip= findPreference("key_api_ip")
+        preapiprotokoll= findPreference("key_api_protokoll")
+        preapitoken= findPreference("key_api_token")
         preauswertungip = findPreference("key_auswertung_url")
 
         prepyuser =findPreference("key_py_user")
@@ -59,28 +50,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyport = findPreference("key_py_port")
         prepyprozess = findPreference("key_py_prozess")
         prepyprogram = findPreference("key_py_program")
-
         loadDatafromPreferences()
 
-        preftpuser?.setOnBindEditTextListener { editText ->
+        preapiip?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
         }
-        preftppwd?.setOnBindEditTextListener { editText ->
-        editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
-        }
-        preftpport?.setOnBindEditTextListener { editText ->
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
-        }
-        preftpip?.setOnBindEditTextListener { editText ->
-        editText.inputType = InputType.TYPE_CLASS_TEXT
-        }
-        preftptoken?.setOnBindEditTextListener { editText ->
+        preapitoken?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
         }
         preauswertungip?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
         }
-
         prepyuser?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
         }
@@ -100,30 +80,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
 
-        preftpuser?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-        preftpport?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-        preftpip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+        preapiip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         preauswertungip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-        preftppwd?.summaryProvider= Preference.SummaryProvider<EditTextPreference> {preference ->
-        val text = preference.text
-        if(TextUtils.isEmpty(text)){
-          "Kein Passwoort wurde gesetzt"
-        }else{
-          val value = "*".repeat(text.length)
-          value
-        }
-        }
-        preftptoken?.summaryProvider= Preference.SummaryProvider<EditTextPreference> {preference ->
+        preapitoken?.summaryProvider= Preference.SummaryProvider<EditTextPreference> {preference ->
             val text = preference.text
             if(TextUtils.isEmpty(text)){
                 "Kein Token wurde gesetzt"
             }else{
-                val value = "*".repeat(text.length)
-                value
+                 "*".repeat(text.length)
             }
 
         }
-
         prepyuser?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepypwd?.summaryProvider = Preference.SummaryProvider<EditTextPreference> {preference ->
             val text = preference.text
@@ -141,21 +108,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyprozess?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 
     }
-
         private fun loadDatafromPreferences(){
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        ftpuser = sharedPreference.getString("key_ftp_nutzername", "")!!
-        ftppwd = sharedPreference.getString("key_ftp_passwort", "")!!
-        ftpip = sharedPreference.getString("key_ftp_ip", "")!!
-        ftpport = sharedPreference.getString("key_ftp_port", "")!!
-        ftptoken = sharedPreference.getString("key_ftp_token", "")!!
+        apipip = sharedPreference.getString("key_api_ip", "")!!
+        apitoken = sharedPreference.getString("key_api_token", "")!!
+        apiprotokoll = sharedPreference.getBoolean("key_api_protokoll", true).toString()!!
         auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
-
         pyuser = sharedPreference.getString("key_py_user", "")!!
         pypwd = sharedPreference.getString("key_py_pwd", "")!!
         pyip = sharedPreference.getString("key_py_ip", "")!!
         pyport = sharedPreference.getString("key_py_port", "")!!
-
         pyprogram = sharedPreference.getString("key_py_program", "")!!
         pyprozess = sharedPreference.getString("key_py_prozess", "")!!
 

@@ -25,11 +25,11 @@ import java.lang.Exception
 class MainFragment : Fragment() {
     private lateinit var rootview:View
     private  lateinit var sharedPreference: SharedPreferences
-    private var ftpuser = ""
-    private var ftppwd = ""
-    private var ftpip = ""
-    private var ftpport = ""
-    private var ftptoken = ""
+
+    private var apipip = ""
+    private var apiprotokoll = ""
+    private var apiwebadresse = ""
+    private var apitoken = ""
     private var auswertungip = ""
     private  var pyip = ""
     private  var pyuser = ""
@@ -40,11 +40,13 @@ class MainFragment : Fragment() {
 
     private fun loadDatafromPreferences(){
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        ftpuser = sharedPreference.getString("key_ftp_nutzername", "")!!
-        ftppwd = sharedPreference.getString("key_ftp_passwort", "")!!
-        ftpip = sharedPreference.getString("key_ftp_ip", "")!!
-        ftpport = sharedPreference.getString("key_ftp_port", "")!!
-        ftptoken = sharedPreference.getString("key_ftp_token", "")!!
+        apipip = sharedPreference.getString("key_api_ip", "")!!
+        apitoken = sharedPreference.getString("key_api_token", "")!!
+        if(sharedPreference.getBoolean("key_api_protokoll", true)!!) {
+            apiprotokoll = "https://"
+        }else{ apiprotokoll="http://"
+        }
+        apiwebadresse= apiprotokoll+apipip
         auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
         pyuser = sharedPreference.getString("key_py_user", "")!!
         pypwd = sharedPreference.getString("key_py_pwd", "")!!
@@ -52,7 +54,8 @@ class MainFragment : Fragment() {
         pyport = sharedPreference.getString("key_py_port", "")!!
         pyprogram = sharedPreference.getString("key_py_program", "")!!
         pyprozess = sharedPreference.getString("key_py_prozess", "")!!
-    }
+        }
+
     protected fun shouldAskPermissions(): Boolean {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
     }
@@ -96,13 +99,13 @@ class MainFragment : Fragment() {
             //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
 
-            uploaderfertiganzeige.text= uploader(ftptoken,ftpip)
+            uploaderfertiganzeige.text= uploader(apitoken,apiwebadresse)
 
         }
 
         auswertung.setOnClickListener {
             val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("https://yarix.ddns.net")
+            openURL.data = Uri.parse(auswertungip)
             startActivity(openURL)
         }
         btn_search.setOnClickListener {
@@ -117,33 +120,17 @@ class MainFragment : Fragment() {
 
     private fun uploader(token:String, ip:String): String {
         try {
-            println(1)
-            var path =
-                Environment.getExternalStorageDirectory().toString() + "/test/test.txt"
-            println(2)
-            val directory = File(path)
-            println(3)
-            var files = directory.isFile
-            println(4)
-            API().uploader(ftpip, Environment.getExternalStorageDirectory().toString() + "/test/test.txt")
-            println(5)
-            var anzahl=0
-            println(6)
-            println(9)
-            return files.toString()
+            API().uploader(ip, Environment.getExternalStorageDirectory().toString() + "/test/test.txt")
+            return File(Environment.getExternalStorageDirectory().toString() + "/test/test.txt").isFile.toString()
         }catch (e: Exception){
-            println(10)
-            println(e.message)
+
             return "fehler"
         }
-
-
-
 
     }
     private fun filereader(anzeige : TextView){
         var speicher = Readfiles().reader()
-        //var datenbank = API().reader(ftptoken,ftpip)
+        //var datenbank = API().reader(apitoken,apiwebadresse)
         var datenbank=1000
         val diff= datenbank- speicher
 

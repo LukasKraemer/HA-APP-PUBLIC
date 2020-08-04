@@ -12,13 +12,10 @@ class Readfiles() {
     fun reader(): Int {
         var founded: Array<Any>? = null
         var foundedFilesfromst: ArrayList<File> = ArrayList()
-        var path = ""
         var ausgabe: String = ""
         var anzahl = 0
         val regex = "Trip_[a-zA-z0-9_-]*.txt".toRegex()
-        path =
-            Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData"
-        val directory = File(path)
+        val directory = File(Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData")
         var files = directory.listFiles()
 
         if (files != null) {
@@ -37,10 +34,7 @@ class Readfiles() {
     }
 
     fun creatediff(local: Array<Any>?, server: ByteArray): Array<Any>? {
-
-
-
-        var diff = local
+        val diff = local
         if (diff != null) {
             val s = if (diff.isNotEmpty()) {
                 "Es wurden " + diff.size + " neue Dateien gefunden"

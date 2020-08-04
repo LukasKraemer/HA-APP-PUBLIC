@@ -314,7 +314,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/var/lib/snapd/snap/android-studio/90/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/directions_run/baseline_directions_run_24.xml" />
+                                      <entry key="url" value="jar:file:/app/extra/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/https/baseline_https_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -325,7 +325,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="6a7c8a" />
-                            <entry key="outputName" value="ic_baseline_directions_run_24" />
+                            <entry key="outputName" value="ic_baseline_https_24" />
                           </map>
                         </option>
                       </PersistentState>
