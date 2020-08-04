@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(requireContext())
         apipip = sharedPreference.getString("key_api_ip", "")!!
         apitoken = sharedPreference.getString("key_api_token", "")!!
-        if(sharedPreference.getBoolean("key_api_protokoll", true)!!) {
+        if(sharedPreference.getBoolean("key_api_protokoll", true)) {
             apiprotokoll = "https://"
         }else{ apiprotokoll="http://"
         }
@@ -95,7 +95,7 @@ class MainFragment : Fragment() {
             tv_calc_fertig.text = "gestartet"
         }
 
-        btn_uploader.setOnClickListener() {
+        btn_uploader.setOnClickListener {
             //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
 
@@ -120,7 +120,7 @@ class MainFragment : Fragment() {
 
     private fun uploader(token:String, ip:String): String {
         try {
-            API().uploader(ip, Environment.getExternalStorageDirectory().toString() + "/test/test.txt")
+            API().uploader(ip, token,Environment.getExternalStorageDirectory().toString() + "/test/test.txt")
             return File(Environment.getExternalStorageDirectory().toString() + "/test/test.txt").isFile.toString()
         }catch (e: Exception){
 

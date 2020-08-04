@@ -7,12 +7,11 @@ import java.io.File
 import java.lang.Exception
 
 
-class Readfiles() {
+class Readfiles {
 
     fun reader(): Int {
-        var founded: Array<Any>? = null
         var foundedFilesfromst: ArrayList<File> = ArrayList()
-        var ausgabe: String = ""
+        var ausgabe = ""
         var anzahl = 0
         val regex = "Trip_[a-zA-z0-9_-]*.txt".toRegex()
         val directory = File(Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData")
@@ -27,13 +26,13 @@ class Readfiles() {
                         anzahl += 1
                     }
                 }
-                founded = foundedFilesfromst.toArray()
+                //foundedFilesfromst.toArray()
             }
         }
         return anzahl
     }
 
-    fun creatediff(local: Array<Any>?, server: ByteArray): Array<Any>? {
+    fun creatediff(local: Array<Any>?, server: Array<Any>): Array<Any>? {
         val diff = local
         if (diff != null) {
             val s = if (diff.isNotEmpty()) {

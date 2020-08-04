@@ -19,13 +19,15 @@ class API {
         posttoServer(url, formBody)
     }
 
-    fun uploader(url:String, filePath:String): String {
+    fun uploader(url:String,token: String, filePath:String): String {
 
         val file = File(filePath)
         val fileRequestBody = file.asRequestBody("text/plain".toMediaType())
         val requestBody = MultipartBody.Builder()
             .addFormDataPart("APP", "Uploader")
             .addFormDataPart("uploadedfile", filePath, fileRequestBody)
+            .addFormDataPart("APP","uploader")
+            .addFormDataPart("token", token)
             .build()
 
         posttoServer(url,requestBody)

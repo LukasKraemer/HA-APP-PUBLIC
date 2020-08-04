@@ -112,7 +112,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(requireContext())
         apipip = sharedPreference.getString("key_api_ip", "")!!
         apitoken = sharedPreference.getString("key_api_token", "")!!
-        apiprotokoll = sharedPreference.getBoolean("key_api_protokoll", true).toString()!!
+        apiprotokoll = sharedPreference.getBoolean("key_api_protokoll", true).toString()
         auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
         pyuser = sharedPreference.getString("key_py_user", "")!!
         pypwd = sharedPreference.getString("key_py_pwd", "")!!
