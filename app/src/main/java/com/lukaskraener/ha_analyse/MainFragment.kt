@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.File
+import java.lang.Exception
 
 
 class MainFragment : Fragment() {
@@ -93,7 +96,7 @@ class MainFragment : Fragment() {
             //wenn der Knopf uploader gedrückt wurde
             uploaderfertiganzeige.text = "gestartet"
 
-            uploader(ftptoken,ftpip)
+            uploaderfertiganzeige.text= uploader(ftptoken,ftpip)
 
         }
 
@@ -113,15 +116,38 @@ class MainFragment : Fragment() {
     }//onview Close
 
     private fun uploader(token:String, ip:String): String {
-        API().reader(token,ip)
+        try {
+            println(1)
+            var path =
+                Environment.getExternalStorageDirectory().toString() + "/test/test.txt"
+            println(2)
+            val directory = File(path)
+            println(3)
+            var files = directory.isFile
+            println(4)
+            API().uploader(ftpip, Environment.getExternalStorageDirectory().toString() + "/test/test.txt")
+            println(5)
+            var anzahl=0
+            println(6)
+            println(9)
+            return files.toString()
+        }catch (e: Exception){
+            println(10)
+            println(e.message)
+            return "fehler"
+        }
 
-        return "Erfolgreich"
+
+
 
     }
     private fun filereader(anzeige : TextView){
         var speicher = Readfiles().reader()
-        var datenbank = API().reader(ftptoken,ftpip)
-        anzeige.text= "fertig"
+        //var datenbank = API().reader(ftptoken,ftpip)
+        var datenbank=1000
+        val diff= datenbank- speicher
+
+        anzeige.text= "Speicher: "+ speicher.toString()+ "\nDB: "+datenbank.toString()+ "\nDifferenz: "+diff.toString()
     }
 
 

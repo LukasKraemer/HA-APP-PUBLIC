@@ -30,7 +30,7 @@
             android:id="@+id/tv_uploader_fertig"
             android:layout_width="125dp"
             android:layout_height="45dp"
-            android:layout_marginTop="108dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="48dp"
             android:background="@color/brackground2"
             android:paddingTop="10dp"
@@ -58,8 +58,8 @@
 
         <TextView
             android:id="@+id/tv_anzeige_oben"
-            android:layout_width="125dp"
-            android:layout_height="60dp"
+            android:layout_width="133dp"
+            android:layout_height="109dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="48dp"
             android:background="@color/brackground2"

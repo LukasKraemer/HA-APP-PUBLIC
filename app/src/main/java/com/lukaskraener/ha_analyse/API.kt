@@ -1,7 +1,13 @@
 package com.lukaskraener.ha_analyse
 
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.MultipartBody.Part.Companion.create
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONArray
+import java.io.File
 import java.io.IOException
 
 
@@ -18,9 +24,18 @@ class API {
         //return this.dbjson.length().toString()
     }
 
-    fun uploader(daten: Array<Any>, url:String){
+    fun uploader(url:String, filePath:String): String {
 
-    }
+        val file = File(filePath)
+        val fileRequestBody = file.asRequestBody("text/plain".toMediaType())
+        val requestBody = MultipartBody.Builder()
+            .addFormDataPart("APP", "Uploader")
+            .addFormDataPart("uploadedfile", filePath, fileRequestBody)
+            .build()
+
+        posttoServer(url,requestBody)
+        return "fertig"
+}
     fun programmstart(token: String, url: String, dbuser: String, dbpwd: String, dbip: String, dbschema: String, dbport: String, programm:String, prozessanzahl: String) {
         val formBody: RequestBody = FormBody.Builder()
             .add("APP", "uploader")
@@ -39,19 +54,21 @@ class API {
     }
 
      fun posttoServer(url: String, formBody: RequestBody) {
-        var array:JSONArray
-        val request = Request.Builder().url(url).post(formBody).build()
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
+         val request = Request.Builder().url(url).post(formBody).build()
+         val client = OkHttpClient()
+
+
+
+         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 //array = JSONArray(response.body!!.string())
                 println(response.body!!.string())
-                println("${response.body!!.toString()::class.qualifiedName}")
             }
 
             override fun onFailure(call: Call, e: IOException) {
                 println("Fehler beim laden")
             }
+
         })
 
     }
