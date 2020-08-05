@@ -1,11 +1,13 @@
 package com.lukaskraener.ha_analyse
 
 
+import android.os.Environment
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
 
 
 class API {
@@ -19,19 +21,17 @@ class API {
         posttoServer(url, formBody)
     }
 
-    fun uploader(url:String,token: String, filePath:String): String {
+    fun uploader(url:String,token: String): String {
+        var r: Int=0
+        var f:Int = 0
+        val directory = File(Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData")
+        val files = directory.listFiles()!!
+        for (i in files.iterator()) {
+            if ("Trip_[a-zA-z0-9_-]*.txt".toRegex().matches(i.name)) {
+                if (UploaderAPI.uploadFile(url, i, token)) { r++ } else { f++ }}
+        }
 
-        val file = File(filePath)
-        val fileRequestBody = file.asRequestBody("text/plain".toMediaType())
-        val requestBody = MultipartBody.Builder()
-            .addFormDataPart("APP", "Uploader")
-            .addFormDataPart("uploadedfile", filePath, fileRequestBody)
-            .addFormDataPart("APP","uploader")
-            .addFormDataPart("token", token)
-            .build()
-
-        posttoServer(url,requestBody)
-        return "fertig"
+    return "Erfolgreich: "+ r.toString()+"\nFehler: "+f.toString()
 }
     fun programmstart(token: String, url: String, dbuser: String, dbpwd: String, dbip: String, dbschema: String, dbport: String, programm:String, prozessanzahl: String) {
         val formBody: RequestBody = FormBody.Builder()
@@ -63,7 +63,7 @@ class API {
             }
 
             override fun onFailure(call: Call, e: IOException) {
-                println("Fehler beim laden")
+                println(e.printStackTrace())
             }
 
         })

@@ -120,21 +120,21 @@ class MainFragment : Fragment() {
 
     private fun uploader(token:String, ip:String): String {
         try {
-            API().uploader(ip, token,Environment.getExternalStorageDirectory().toString() + "/test/test.txt")
-            return File(Environment.getExternalStorageDirectory().toString() + "/test/test.txt").isFile.toString()
+            val returnvalue = API().uploader(ip,token)
+            return returnvalue
         }catch (e: Exception){
-
+            println(e.printStackTrace())
             return "fehler"
         }
 
     }
     private fun filereader(anzeige : TextView){
         var speicher = Readfiles().reader()
-        //var datenbank = API().reader(apitoken,apiwebadresse)
-        var datenbank=1000
-        val diff= datenbank- speicher
+        API().reader(apitoken,apiwebadresse)
+        //var datenbank=1000
+        val diff= speicher
 
-        anzeige.text= "Speicher: "+ speicher.toString()+ "\nDB: "+datenbank.toString()+ "\nDifferenz: "+diff.toString()
+        anzeige.text= "Speicher: "+ speicher.toString()+ "\nDB: "+ "\nDifferenz: "+diff.toString()
     }
 
 
