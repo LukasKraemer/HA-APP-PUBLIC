@@ -9,27 +9,11 @@ import java.lang.Exception
 
 class Readfiles {
 
-    fun reader(): Int {
-        var foundedFilesfromst: ArrayList<File> = ArrayList()
-        var ausgabe = ""
-        var anzahl = 0
-        val regex = "Trip_[a-zA-z0-9_-]*.txt".toRegex()
+    fun reader(): Array<File>{
         val directory = File(Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData")
         var files = directory.listFiles()
+        return  files
 
-        if (files != null) {
-            if (files.size >= 0) {
-                for (i in 1 until files.size) {
-                    if (regex.matches(files[i].name)) {
-                        foundedFilesfromst.add(files[i])
-                        ausgabe = ausgabe + files[i].name.toString() + "\n"
-                        anzahl += 1
-                    }
-                }
-                //foundedFilesfromst.toArray()
-            }
-        }
-        return anzahl
     }
 
     fun creatediff(local: Array<Any>?, server: Array<Any>): Array<Any>? {
@@ -44,5 +28,12 @@ class Readfiles {
         }
         return  diff
     }
-
+fun int_from_array(files: Array<File>): Int{
+    var anzahl = 0
+    if (files != null) {
+        if (files.size >= 0) {
+            for (i in 1 until files.size) {
+                if ("Trip_[a-zA-z0-9_-]*.txt".toRegex().matches(files[i].name)) { anzahl += 1 } } } }
+    return anzahl
+}
 }

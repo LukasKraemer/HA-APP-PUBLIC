@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -35,6 +36,7 @@ class MainFragment : Fragment() {
     private  var pyuser = ""
     private  var pypwd = ""
     private  var pyport = ""
+    private var pyschema= ""
     private  var pyprozess = ""
     private var pyprogram = ""
 
@@ -52,6 +54,7 @@ class MainFragment : Fragment() {
         pypwd = sharedPreference.getString("key_py_pwd", "")!!
         pyip = sharedPreference.getString("key_py_ip", "")!!
         pyport = sharedPreference.getString("key_py_port", "")!!
+        pyschema = sharedPreference.getString("key_py_bau", "")!!
         pyprogram = sharedPreference.getString("key_py_program", "")!!
         pyprozess = sharedPreference.getString("key_py_prozess", "")!!
         }
@@ -92,14 +95,13 @@ class MainFragment : Fragment() {
 
 
         btn_calc.setOnClickListener {
+            API().programmstart(token = apitoken,url =apiwebadresse, dbip = pyip, dbport = pyport,dbpwd = pypwd,dbschema = pyschema,dbuser = pyuser, programm = pyprogram,prozessanzahl = pyprozess)
             tv_calc_fertig.text = "gestartet"
         }
 
         btn_uploader.setOnClickListener {
             //wenn der Knopf uploader gedrückt wurde
-            uploaderfertiganzeige.text = "gestartet"
-
-            uploaderfertiganzeige.text= uploader(apitoken,apiwebadresse)
+            uploader(uploaderfertiganzeige,token = apitoken,ip = apiwebadresse)
 
         }
 
@@ -109,7 +111,7 @@ class MainFragment : Fragment() {
             startActivity(openURL)
         }
         btn_search.setOnClickListener {
-            filereader(anzeige_oben)
+            filereader(anzeige_oben,apipip,apitoken)
         }
 
         btn_switch.setOnClickListener {
@@ -118,23 +120,24 @@ class MainFragment : Fragment() {
         return rootview
     }//onview Close
 
-    private fun uploader(token:String, ip:String): String {
+    private fun uploader(anzeige: TextView, token:String, ip:String){
+    //anzeige.text = "gestartet"
+    Thread(Runnable {
+        // a potentially time consuming task
         try {
-            val returnvalue = API().uploader(ip,token)
-            return returnvalue
-        }catch (e: Exception){
+            API().uploader(token = token,url = ip,anzeige = anzeige)
+
+
+        }catch(e: Exception) {
             println(e.printStackTrace())
-            return "fehler"
         }
-
+    }).start()
     }
-    private fun filereader(anzeige : TextView){
-        var speicher = Readfiles().reader()
-        API().reader(apitoken,apiwebadresse)
-        //var datenbank=1000
-        val diff= speicher
 
-        anzeige.text= "Speicher: "+ speicher.toString()+ "\nDB: "+ "\nDifferenz: "+diff.toString()
+    private fun filereader(anzeige : TextView, ip: String, token :String){
+        API().reader(token,apiwebadresse, anzeige)
+
+        //anzeige.text= "Speicher: "+ speicher.toString()+ "\nDB: "+ "\nDifferenz: "+diff.toString()
     }
 
 

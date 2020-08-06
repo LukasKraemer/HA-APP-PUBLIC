@@ -22,7 +22,7 @@
         <EditTextPreference
             android:defaultValue="0"
             android:icon="@drawable/ic_baseline_vpn_key_24"
-            android:key="key_ftp_token"
+            android:key="key_api_token"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="0"
@@ -63,6 +63,14 @@
             android:singleLine="true"
             android:summary="3306"
             android:title="Datenbank Port" />
+        <EditTextPreference
+            android:defaultValue="car"
+            android:icon="@drawable/ic_baseline_post_add_24"
+            android:key="key_py_bau"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="car"
+            android:title="Datenbank Schema" />
 
         <EditTextPreference
             android:defaultValue="beide"

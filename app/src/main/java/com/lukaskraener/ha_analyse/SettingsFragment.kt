@@ -18,6 +18,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private  var prepyuser:EditTextPreference? = null
     private  var prepypwd:EditTextPreference? = null
     private  var prepyport:EditTextPreference? = null
+    private  var prepyschema:EditTextPreference? = null
     private  var prepyprozess:EditTextPreference? = null
     private  var prepyprogram:EditTextPreference? = null
 
@@ -31,6 +32,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private  var pyuser = ""
     private  var pypwd = ""
     private  var pyport = ""
+    private var pyschema= ""
     private  var pyprozess = ""
     private var pyprogram = ""
 
@@ -48,6 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyip = findPreference("key_py_ip")
         prepypwd = findPreference("key_py_pwd")
         prepyport = findPreference("key_py_port")
+        prepyschema = findPreference("key_py_bau")
         prepyprozess = findPreference("key_py_prozess")
         prepyprogram = findPreference("key_py_program")
         loadDatafromPreferences()
@@ -72,6 +75,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         prepyport?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_NUMBER
+        }
+        prepyschema?.setOnBindEditTextListener { editText ->
+            editText.inputType = InputType.TYPE_CLASS_TEXT
         }
         prepyprogram?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_TEXT
@@ -104,6 +110,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         prepyip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepyport?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+        prepyschema?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepyprogram?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepyprozess?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 
@@ -118,6 +125,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         pypwd = sharedPreference.getString("key_py_pwd", "")!!
         pyip = sharedPreference.getString("key_py_ip", "")!!
         pyport = sharedPreference.getString("key_py_port", "")!!
+        pyport = sharedPreference.getString("key_py_bau", "")!!
         pyprogram = sharedPreference.getString("key_py_program", "")!!
         pyprozess = sharedPreference.getString("key_py_prozess", "")!!
 
