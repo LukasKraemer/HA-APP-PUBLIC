@@ -95,8 +95,8 @@ class MainFragment : Fragment() {
 
 
         btn_calc.setOnClickListener {
-            API().programmstart(token = apitoken,url =apiwebadresse, dbip = pyip, dbport = pyport,dbpwd = pypwd,dbschema = pyschema,dbuser = pyuser, programm = pyprogram,prozessanzahl = pyprozess)
-            tv_calc_fertig.text = "gestartet"
+            API().programmstart(anzeige = tv_calc_fertig,token = apitoken,url =apiwebadresse, dbip = pyip, dbport = pyport,dbpwd = pypwd,dbschema = pyschema,dbuser = pyuser, programm = pyprogram,prozessanzahl = pyprozess)
+            //tv_calc_fertig.text = "gestartet"
         }
 
         btn_uploader.setOnClickListener {
