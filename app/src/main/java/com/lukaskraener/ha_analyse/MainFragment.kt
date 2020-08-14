@@ -2,25 +2,26 @@ package com.lukaskraener.ha_analyse
 
 
 import android.annotation.TargetApi
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.io.File
-import java.lang.Exception
+import okhttp3.internal.notify
 
 
 class MainFragment : Fragment() {
@@ -95,14 +96,12 @@ class MainFragment : Fragment() {
 
 
         btn_calc.setOnClickListener {
-            API().programmstart(token = apitoken,url =apiwebadresse, dbip = pyip, dbport = pyport,dbpwd = pypwd,dbschema = pyschema,dbuser = pyuser, programm = pyprogram,prozessanzahl = pyprozess)
-            tv_calc_fertig.text = "gestartet"
+            API().programmstart(anzeige = tv_calc_fertig ,token = apitoken,url =apiwebadresse, dbip = pyip, dbport = pyport,dbpwd = pypwd,dbschema = pyschema,dbuser = pyuser, programm = pyprogram,prozessanzahl = pyprozess)
         }
 
         btn_uploader.setOnClickListener {
             //wenn der Knopf uploader gedrückt wurde
             uploader(uploaderfertiganzeige,token = apitoken,ip = apiwebadresse)
-
         }
 
         auswertung.setOnClickListener {
@@ -139,7 +138,6 @@ class MainFragment : Fragment() {
 
         //anzeige.text= "Speicher: "+ speicher.toString()+ "\nDB: "+ "\nDifferenz: "+diff.toString()
     }
-
 
 }
 

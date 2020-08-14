@@ -14,8 +14,8 @@
 
         <TextView
             android:id="@+id/tv_calc_fertig"
-            android:layout_width="125dp"
-            android:layout_height="45dp"
+            android:layout_width="201dp"
+            android:layout_height="156dp"
             android:layout_marginTop="108dp"
             android:layout_marginEnd="50dp"
             android:background="@color/brackground2"

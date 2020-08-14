@@ -1,8 +1,6 @@
 package com.lukaskraener.ha_analyse
 
 import android.os.Environment
-import android.widget.TextView
-import okhttp3.internal.EMPTY_BYTE_ARRAY
 import java.io.File
 import java.lang.Exception
 
@@ -10,10 +8,17 @@ import java.lang.Exception
 class Readfiles {
 
     fun reader(): Array<File>{
-        val directory = File(Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData")
-        var files = directory.listFiles()
-        return  files
+        try {
+            val directory = File(
+                Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData"
+            )
+            var files = directory.listFiles()
+            return files
 
+        }catch (e : Exception){
+            val fehler= emptyArray<File>()
+            return fehler
+        }
     }
 
     fun creatediff(local: Array<Any>?, server: Array<Any>): Array<Any>? {

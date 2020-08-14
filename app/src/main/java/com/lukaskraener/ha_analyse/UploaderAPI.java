@@ -2,8 +2,6 @@ package com.lukaskraener.ha_analyse;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -15,7 +13,6 @@ import okhttp3.Response;
 
 public class UploaderAPI {
 
-    
     public static Boolean uploadFile(String serverURL, File file, String token) {
         try {
             OkHttpClient client = new OkHttpClient();
