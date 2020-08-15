@@ -8,9 +8,6 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
-import java.lang.reflect.Executable
-import kotlin.system.exitProcess
-
 
 class API {
     fun reader( token: String, url: String, anzeige: TextView) {
@@ -19,7 +16,7 @@ class API {
             .add("APP", programm)
             .add("token", token)
             .build()
-        sendtoserver(formBody, url, anzeige, programm)
+        sendtoserver(url = url, token = token,programm = programm,anzeige = anzeige,formBody = formBody)
     }
 
     fun uploader(token: String, url: String, anzeige: TextView){
@@ -28,7 +25,7 @@ class API {
             .add("APP", programm)
             .add("token", token)
             .build()
-        sendtoserver(formBody,url,anzeige,programm)
+        sendtoserver(url = url, token = token,programm = programm,anzeige = anzeige,formBody = formBody)
     }
 
     fun programmstart(anzeige: TextView,token: String, url: String, dbuser: String, dbpwd: String, dbip: String, dbschema: String, dbport: String, programm:String, prozessanzahl: String) {
@@ -44,21 +41,20 @@ class API {
             .add("APP_program", programm)
             .add("APP_threads", prozessanzahl)
             .build()
-        sendtoserver(formBody,url,anzeige,programm)
+        sendtoserver(url = url, token = token,programm = programm,anzeige = anzeige,formBody = formBody)
 
     }
 
-    fun uploader_handler(url:String,token: String,files:Array<File>): String {
+    fun uploader_handler(url:String,token: String,files:Set<File>, anzeige: TextView) {
         var r: Int=0
         var f:Int = 0
-        for (i in files.iterator()) {
-            if ("Trip_[a-zA-z0-9_-]*.txt".toRegex().matches(i.name)) {
-                if (UploaderAPI.uploadFile(url, i, token)) { r++ } else { f++ }}
+        files.forEach{
+                if (UploaderAPI.uploadFile(url, it, token)) { r++ } else { f++ }
+            anzeige.text = "erfolgreich: "+r.toString()+"\nfehler: "+f.toString()
         }
-        return "erfolgreich" + r.toString()+"\nfehler: "+ f.toString()
     }
 
-    private fun sendtoserver(formBody: RequestBody, url: String, anzeige: TextView, programm: String){
+    private fun sendtoserver(formBody: RequestBody, url: String, anzeige: TextView, programm: String, token: String){
         val request = Request.Builder().url(url).post(formBody).build()
         val client = OkHttpClient()
         client.newCall(request).enqueue(object : Callback {
@@ -68,7 +64,7 @@ class API {
                     Thread(Runnable {
                         when (programm) {
                             "reader" -> ausgabe_reader(response.body!!.string(), anzeige)
-                            "filename_reader" -> datenabgleich(response.body!!.string(), anzeige)
+                            "filename_reader" -> datenabgleich(response.body!!.string(), anzeige,url,token)
                             "start" -> programm_bearbeiten(response.body!!.string(), anzeige)
                         }
                     }).start()
@@ -79,7 +75,7 @@ class API {
             }
 
             override fun onFailure(call: Call, e: IOException) {
-                println(e.printStackTrace())
+                e.printStackTrace()
                 anzeige.text = "Netzwerkfehler"
             }
         })
@@ -88,18 +84,17 @@ class API {
 
     fun ausgabe_reader (responsestring: String, anzeige: TextView){
         var status = 0
-        println(responsestring)
         try {
             val json = JSONObject(responsestring)
             status =1
             val db = json.getString("db").toInt()
             status= 2
-            val stg_server = json.getString("stg").toInt()
+            val stg_server = json.getInt("stg")
             status= 3
-            val stg = Readfiles().int_from_array(Readfiles().reader())
+            val stg = Readfiles().reader().size
             status=4
             anzeige.text =
-                "Lokal: " + stg.toString() + "\nDatenbank: " + db.toString() + "\nDfferenz: " + (stg - db).toString() + "\nServer Speicher: " + stg_server.toString()
+                "Lokal: " + stg.toString() + "\nDatenbank: " + db.toString() + "\nDfferenz: " + (stg - stg_server).toString() + "\nServer Speicher: " + stg_server.toString()
         }catch (e: Exception){
             e.printStackTrace()
             var fehler :String = ""
@@ -119,76 +114,36 @@ class API {
         try{anzeige.text = JSONObject(response).getString("shell")}catch (e : Exception){anzeige.text="Fehler bei Ausgabe"}
     }
 
-    private fun datenabgleich(response: String,anzeige: TextView){
+    private fun datenabgleich(response: String,anzeige: TextView, url: String,token: String){
         try {
-            //val json = gson.fromJson(response.body!!.string(), JSONUploader::class.java)
-            var json = JSONObject(response)
+            val json = JSONObject(response)
             val files = Readfiles().reader()
-
-            var gleich = ArrayList<File>()
+            val gleich = ArrayList<File>()
             val serverfilelist = json.getJSONArray("files")
-
-                var i = 0
-                if (json.getInt("size") > files.count()) {
-
-                    try {
-                        for (i in 1..json.getInt("size")) {
-
-                            files.forEach {
-                                println("-----------------------------")
-                                println(serverfilelist.get(i).toString())
-                                println(it.name.toString())
-                                println("-----------------------------")
-
-                                if(serverfilelist.get(i).toString() == it.name.toString()) {
-                                    gleich.add(files[i])
-                                    println("treffer in " + i)
-                                }
-                            }
-                        }
-                        anzeige.text= gleich.size.toString()
-                    } catch (es: ArrayIndexOutOfBoundsException){
-                        es.printStackTrace()
-                        anzeige.text= gleich.size.toString() + "array"
-                    }
-
-                } else {
-                    files.forEach {
-                        try {
-                            i = 0
-                            for (i in 1..json.getInt("size")) {
-                                //println("-----------------------------")
-                                //println(serverfilelist.get(i).toString())
-                                //println(it.name.toString())
-                                //println("-----------------------------")
-
-                                if (serverfilelist.get(i)
-                                        .toString() == it.name.toString()
-                                ) {
-                                    gleich.add(files[i])
-                                    println("treffer in " + i)
-                                }
-
-                            }
-                            anzeige.text = gleich.size.toString()
-                        }catch(er: ArrayIndexOutOfBoundsException){
-                            anzeige.text = gleich.size.toString()
+            try {
+                files.forEach {
+                    for (i in 0..json.get("size").toString().toInt()-1) {
+                        if (it.name == serverfilelist[i]) {
+                                gleich.add(it)
+                                anzeige.text = "gefunden: " + gleich.size.toString()
                         }
                     }
                 }
-
-                val uncomman = gleich //.toArray() as Array<File>
-                anzeige.text="Gleich = "+ uncomman.size
-
-                /*
-                    uncomman.forEach {
-                    UploaderAPI.uploadFile(url,it,token)
-                    i++
-                    anzeige.text="hochgeladen: "+i.toString()
-                    }
-                */
+                anzeige.text="Treffer: "+gleich.size.toString()
+            }catch (e: Exception){
+                e.printStackTrace()
+                anzeige.text="Fehler beim Abgeleich"
+            }
+            val difference = files.toSet().minus(gleich.toSet())
+            if( gleich.size + difference.size == files.size) {
+                anzeige.text =
+                    "gleich: " + gleich.size.toString() + "\nungleich: " + difference.size.toString()
+            }else{
+                anzeige.text =
+                    "\nDifferenzfehler\ngleich: " + gleich.size.toString() + "\nungleich: " + difference.size.toString()
+            }
+            uploader_handler(url=url,token = token,files = difference,anzeige=anzeige)
     }catch (e: Exception){
         e.printStackTrace()}
     }
 }
-class JSONUploader(val files: List<String>, val size:Int)

@@ -21,8 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import okhttp3.internal.notify
-
 
 class MainFragment : Fragment() {
     private lateinit var rootview:View

@@ -7,16 +7,21 @@ import java.lang.Exception
 
 class Readfiles {
 
-    fun reader(): Array<File>{
+    fun reader(): ArrayList<File> {
         try {
-            val directory = File(
-                Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData"
-            )
+            val directory = File(Environment.getExternalStorageDirectory().toString() + "/_hybridassistant/TripData")
             var files = directory.listFiles()
-            return files
+            val checkedfiles = ArrayList<File>()
+            files.forEach {
+                if ("Trip_[a-zA-z0-9_-]*.txt".toRegex().matches(it.name)) {
+                    checkedfiles.add(it)
+                }
+            }
+            val returnvalue =  checkedfiles
+            return returnvalue
 
         }catch (e : Exception){
-            val fehler= emptyArray<File>()
+            val fehler= ArrayList<File>()
             return fehler
         }
     }
@@ -29,7 +34,6 @@ class Readfiles {
             } else {
                 "keine neunen Dateien"
             }
-
         }
         return  diff
     }
