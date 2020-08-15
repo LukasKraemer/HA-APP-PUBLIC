@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/Schriftfarbe</item>
         <item name="android:textColorSecondary">@color/Schriftfarbe</item>
         <item name="android:textColor">@color/Schriftfarbe</item>
+        <item name="android:textColorPrimary">@color/Schriftfarbe</item>
         <item name="android:background">@color/brackground2</item>
     </style>
 

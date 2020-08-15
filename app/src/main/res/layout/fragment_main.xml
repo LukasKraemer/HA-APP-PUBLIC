@@ -14,10 +14,10 @@
 
         <TextView
             android:id="@+id/tv_calc_fertig"
-            android:layout_width="125dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="108dp"
-            android:layout_marginEnd="50dp"
+            android:layout_width="201dp"
+            android:layout_height="156dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="32dp"
             android:background="@color/brackground2"
             android:paddingTop="10dp"
             android:text="nicht gestartet"
@@ -29,8 +29,8 @@
 
         <TextView
             android:id="@+id/tv_uploader_fertig"
-            android:layout_width="125dp"
-            android:layout_height="45dp"
+            android:layout_width="153dp"
+            android:layout_height="80dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="48dp"
             android:background="@color/brackground2"
@@ -59,8 +59,8 @@
 
         <TextView
             android:id="@+id/tv_anzeige_oben"
-            android:layout_width="185dp"
-            android:layout_height="156dp"
+            android:layout_width="173dp"
+            android:layout_height="143dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="48dp"
             android:background="@color/brackground2"
