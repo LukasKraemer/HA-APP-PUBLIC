@@ -1,5 +1,7 @@
 package com.lukaskraener.ha_analyse;
 
+import android.app.NotificationManager;
+
 import java.io.File;
 import java.io.IOException;
 import okhttp3.Call;
@@ -48,4 +50,5 @@ public class UploaderAPI {
             return false;
         }
     }
+
 }
