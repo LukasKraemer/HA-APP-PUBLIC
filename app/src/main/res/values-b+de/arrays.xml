@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="programm">
-        <item>both</item>
-        <item>uploader</item>
-        <item>calc summary</item>
+        <item>beide</item>
+        <item>nur hochladen</item>
+        <item>nur übersichtswerte berechnen</item>
     </string-array>
 
     <string-array name="programmwerte">

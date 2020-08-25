@@ -12,12 +12,12 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="129.168.10.10"
-            android:title="Ip-Adresse" />
+            android:title="@string/API_Host" />
         <SwitchPreference
             android:defaultValue="false"
             android:icon="@drawable/ic_baseline_https_24"
             android:key="key_api_protokoll"
-            android:summary="Server muss SSL unterstützen"
+            android:summary="@string/ssl_support"
             android:title="HTTPS?" />
         <EditTextPreference
             android:defaultValue="0"
@@ -28,7 +28,7 @@
             android:summary="0"
             android:title="Token" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Python Programm">
+    <PreferenceCategory android:title="Sever">
 
         <EditTextPreference
             android:defaultValue="Database"
@@ -37,7 +37,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="Database"
-            android:title="Datenbank Nutzername" />
+            android:title="@string/database_user" />
         <EditTextPreference
             android:defaultValue="pwd"
             android:icon="@drawable/ic_baseline_vpn_key_24"
@@ -45,7 +45,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="****"
-            android:title="Datenbank Passwort" />
+            android:title="@string/database_pwd" />
         <EditTextPreference
             android:defaultValue="1.1.1.1"
             android:icon="@drawable/ic_baseline_cloud_upload_24"
@@ -53,7 +53,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="1.1.1.1"
-            android:title="Datenbank IP" />
+            android:title="@string/database_ip" />
 
         <EditTextPreference
             android:defaultValue="portnummer"
@@ -62,7 +62,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="3306"
-            android:title="Datenbank Port" />
+            android:title="@string/database_Port" />
         <EditTextPreference
             android:defaultValue="car"
             android:icon="@drawable/ic_baseline_post_add_24"
@@ -70,17 +70,15 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="car"
-            android:title="Datenbank Schema" />
+            android:title="@string/database_Schema" />
 
-        <EditTextPreference
-            android:defaultValue="beide"
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/programm"
+            android:entryValues="@array/programmwerte"
             android:icon="@drawable/ic_baseline_apps_24"
             android:key="key_py_program"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="beide"
-            android:title="Programmauswahl" />
-
+            android:title="@string/Program_selection" />
         <EditTextPreference
             android:defaultValue='"1"'
             android:icon="@drawable/ic_baseline_all_inbox_24"
@@ -88,10 +86,10 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="1"
-            android:title="Prozessanzahl" />
+            android:title="@string/process_int" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Auswertung">
+    <PreferenceCategory android:title="@string/evo">
 
         <EditTextPreference
             android:defaultValue=""
@@ -100,7 +98,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary=""
-            android:title="IP Adresse der Auswertung"
+            android:title="@string/evo_ip"
             app:defaultValue="1.1.1.1" />
     </PreferenceCategory>
 

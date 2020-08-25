@@ -2,6 +2,7 @@ package com.lukaskraener.ha_analyse
 
 
 
+import android.content.Context
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -11,27 +12,42 @@ import java.io.File
 import java.io.IOException
 import java.lang.Exception
 
-class API {
-    fun reader( token: String, url: String, anzeige: TextView) {
+class API (
+    val tokens: String,
+    val urls: String,
+    val anzeiges: TextView,
+    val context: Context
+)
+{
+    private val token = tokens
+    private val url = urls
+    private val anzeige = anzeiges
+    private lateinit var responsestring: JSONObject
+
+    fun initrespone(response:String){
+        this.responsestring = JSONObject(response)
+    }
+
+    fun reader( ) {
         val programm= "reader"
         val formBody: RequestBody = FormBody.Builder()
             .add("APP", programm)
             .add("token", token)
             .build()
-        sendtoserver(url = url, token = token,programm = programm,anzeige = anzeige,formBody = formBody)
+        sendtoserver(programm = programm, formBody = formBody)
     }
 
-    fun uploader(token: String, url: String, anzeige: TextView, processbar : ProgressBar){
+    fun uploader(processbar : ProgressBar){
         val programm = "filename_reader"
         val formBody: RequestBody = FormBody.Builder()
             .add("APP", programm)
             .add("token", token)
             .build()
-        sendtoserver(url = url, token = token,programm = programm,anzeige = anzeige,formBody = formBody)
+        sendtoserver(programm = programm,formBody = formBody)
         processbar.visibility= View.GONE
     }
 
-    fun programmstart(anzeige: TextView,token: String, url: String, dbuser: String, dbpwd: String, dbip: String, dbschema: String, dbport: String, programm:String, prozessanzahl: String) {
+    fun programmstart(dbuser: String, dbpwd: String, dbip: String, dbschema: String, dbport: String, py_programm:String, prozessanzahl: String) {
         val programm= "start"
         val formBody: RequestBody = FormBody.Builder()
             .add("APP", programm)
@@ -41,57 +57,59 @@ class API {
             .add("APP_adress", dbip)
             .add("APP_schema", dbschema)
             .add("APP_port", dbport)
-            .add("APP_program", programm)
+            .add("APP_program", py_programm)
             .add("APP_threads", prozessanzahl)
             .build()
-        sendtoserver(url = url, token = token,programm = programm,anzeige = anzeige,formBody = formBody)
+        sendtoserver(programm = programm,formBody = formBody)
 
     }
 
-    fun uploader_handler(url:String,token: String,files:Set<File>, anzeige: TextView) {
+    private fun uploader_handler(files:Set<File>) {
         var r: Int=0
         var f:Int = 0
         var i : Int = 0
-        MainFragment().testbenahritigung ("Testupload gestartet", 0, files.size)
+        val notificationtext= this.context.getString(R.string.notification_uploader)
+        MainFragment().testbenahritigung (notificationtext, 0, files.size)
         files.forEach{
             if (UploaderAPI.uploadFile(url, it, token)) { r++ } else { f++ }
-            MainFragment().testbenahritigung ("Testupload gestartet", r+f, files.size)
+            MainFragment().testbenahritigung (notificationtext, r+f, files.size)
         }
-        anzeige.text = "erfolgreich: "+r.toString()+"\nfehler: "+f.toString()
+        anzeige.text = this.context.getString(R.string.uploader_output, r, f)
     }
 
-    private fun sendtoserver(formBody: RequestBody, url: String, anzeige: TextView, programm: String, token: String){
-        val request = Request.Builder().url(url).post(formBody).build()
+    private fun sendtoserver(formBody: RequestBody, programm: String){
+        val request = Request.Builder().url(this.url).post(formBody).build()
         val client = OkHttpClient()
         client.newCall(request).enqueue(object : Callback {
 
             override fun onResponse(call: Call, response: Response) {
+                initrespone(response.body!!.string())
                 try {
-                    Thread(Runnable {
+                    Thread {
                         when (programm) {
-                            "reader" -> ausgabe_reader(response.body!!.string(), anzeige)
-                            "filename_reader" -> datenabgleich(response.body!!.string(), anzeige,url,token)
-                            "start" -> programm_bearbeiten(response.body!!.string(), anzeige)
+                            "reader" -> ausgabe_reader()
+                            "filename_reader" -> datenabgleich()
+                            "start" -> programm_bearbeiten()
                         }
-                    }).start()
+                    }.start()
                 }catch (e: Exception){
                     e.printStackTrace()
-                    anzeige.text = "Server Fehler"
+                    anzeige.text = this@API.context.getString(R.string.server_error)
                 }
             }
 
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
-                anzeige.text = "Netzwerkfehler"
+                anzeige.text = this@API.context.getString(R.string.network_error)
             }
         })
     }
 
 
-    fun ausgabe_reader (responsestring: String, anzeige: TextView){
+    private fun ausgabe_reader (){
         var status = 0
         try {
-            val json = JSONObject(responsestring)
+            val json = responsestring
             status =1
             val db = json.getString("db").toInt()
             status= 2
@@ -99,8 +117,8 @@ class API {
             status= 3
             val stg = Readfiles().reader().size
             status=4
-            anzeige.text =
-                "Lokal: " + stg.toString() + "\nDatenbank: " + db.toString() + "\nDfferenz: " + (stg - stg_server).toString() + "\nServer Speicher: " + stg_server.toString()
+            anzeige.text = this.context.getString(R.string.reader_output, stg,db, stg - stg_server, stg_server)
+               // "Lokal: " + stg.toString() + "\nDatenbank: " + db.toString() + "\nDfferenz: " + (stg - stg_server).toString() + "\nServer Speicher: " + stg_server.toString()
         }catch (e: Exception){
             e.printStackTrace()
             var fehler :String = ""
@@ -116,13 +134,13 @@ class API {
     }
 
 
-    private fun programm_bearbeiten(response: String,anzeige: TextView){
-        try{anzeige.text = JSONObject(response).getString("shell")}catch (e : Exception){anzeige.text="Fehler bei Ausgabe"}
+    private fun programm_bearbeiten(){
+        try{anzeige.text = responsestring.getString("shell")}catch (e : Exception){anzeige.text="Fehler bei Ausgabe"}
     }
 
-    private fun datenabgleich(response: String,anzeige: TextView, url: String,token: String){
+    private fun datenabgleich(){
         try {
-            val json = JSONObject(response)
+            val json = responsestring
             val files = Readfiles().reader()
             val gleich = ArrayList<File>()
             val serverfilelist = json.getJSONArray("files")
@@ -131,24 +149,21 @@ class API {
                     for (i in 0..json.get("size").toString().toInt()-1) {
                         if (it.name == serverfilelist[i]) {
                             gleich.add(it)
-                            anzeige.text = "gefunden: " + gleich.size.toString()
                         }
                     }
                 }
-                anzeige.text="Treffer: "+gleich.size.toString()
+                anzeige.text=this.context.getString(R.string.founded_output, gleich.size)
             }catch (e: Exception){
                 e.printStackTrace()
-                anzeige.text="Fehler beim Abgeleich"
+                anzeige.text=this.context.getString(R.string.diff_error)
             }
             val difference = files.toSet().minus(gleich.toSet())
             if( gleich.size + difference.size == files.size) {
-                anzeige.text =
-                    "gleich: " + gleich.size.toString() + "\nungleich: " + difference.size.toString()
+                anzeige.text = this.context.getString(R.string.diff_output, gleich.size, difference.size )
             }else{
-                anzeige.text =
-                    "\nDifferenzfehler\ngleich: " + gleich.size.toString() + "\nungleich: " + difference.size.toString()
+                anzeige.text = this.context.getString(R.string.diff_error)+"\n"+this.context.getString(R.string.diff_output, gleich.size, difference.size )
             }
-            uploader_handler(url=url,token = token,files = difference,anzeige=anzeige)
+            uploader_handler(files = difference)
         }catch (e: Exception){
             e.printStackTrace()}
     }

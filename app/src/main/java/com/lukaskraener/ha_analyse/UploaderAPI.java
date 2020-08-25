@@ -39,10 +39,6 @@ public class UploaderAPI {
 
                 @Override
                 public void onResponse(final Call call, final Response response) throws IOException {
-                    if (!response.isSuccessful()) {
-                        // Handle the error
-                    }
-                    // Upload successful
                 }
             });
             return true;

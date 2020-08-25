@@ -79,15 +79,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyschema?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_TEXT
         }
-        prepyprogram?.setOnBindEditTextListener { editText ->
-        editText.inputType = InputType.TYPE_CLASS_TEXT
-        }
         prepyprozess?.setOnBindEditTextListener { editText ->
         editText.inputType = InputType.TYPE_CLASS_NUMBER
+
         }
 
-        preapiip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+        //preapiip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         preauswertungip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+
+
+        preapiip?.summaryProvider = Preference.SummaryProvider<EditTextPreference>{ preference->
+            val text = preference.text.toString()
+            val regexip = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/[a-zA-Z0-9/_+-.]*".toRegex()
+            val regexhostname = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])/[a-zA-Z0-9/_+-.]*".toRegex()
+            if(regexip.matches(text)|| regexhostname.matches(text)){
+                text
+            } else{
+                "Synaktisch falsche Eingabe"
+            }
+        }
+
         preapitoken?.summaryProvider= Preference.SummaryProvider<EditTextPreference> {preference ->
             val text = preference.text
             if(TextUtils.isEmpty(text)){
@@ -111,7 +122,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         prepyip?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepyport?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepyschema?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
-        prepyprogram?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+
+        //prepyprogram?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
         prepyprozess?.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
 
     }

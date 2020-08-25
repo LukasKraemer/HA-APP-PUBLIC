@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- APP -->
+    <string name="app_name">HA Analayse</string>
+    <string name="noti_name">Fortschrittsanzeige</string>
+    <string name="noti_desc">Zeigt den Fortschritt des Uplaoder an</string>
+
+    <!--Main Fragment -->
+    <string name="title_activity_website">website</string>
+    <string name="notstarted">nicht gestartet</string>
+    <string name="open_evaluation">Öffne Auswertung</string>
+    <string name="dev">Drittanbieter Software vom hybrid assistant app</string>
+
+    <!--Settings Fragment -->
+    <string name="API_Host">IP Adresse:</string>
+    <string name="ssl_support">Server unterstützt SSL</string>
+
+    <string name="database_ip">Datenbank IP-Adresse</string>
+    <string name="database_user">Datenbank Nutzer</string>
+    <string name="database_pwd">Datenbank Passwort</string>
+    <string name="database_Schema">Datenbank Schema</string>
+    <string name="database_Port">Datenbank Port</string>
+    <string name="Program_selection">Programmauswahl </string>
+    <string name="process_int">Prozessanzahl </string>
+    <string name="evo">Auswertung</string>
+    <string name="evo_ip">Link zur Auswertung</string>
+    <string name="noprogramm">kein Programm ausgewählt</string>
+
+    <!--functions  mainfrag-->
+    <string name="finished">Fertig</string>
+    <string name="notification_uploader">hochladen begonnen</string>
+
+    <!-- finish -->
+    <string name="uploader_output">Erfolgreich %1$d \n fehlerhaft %2$d</string>
+    <string name="reader_output">Lokal: %1$d \nDatenbank: %2$d \nDfferenz: %3$d \nServer Speicher: %4$d</string>
+    <string name="founded_output">Gefunden: %1$d</string>
+    <string name="diff_output">"Gleich: %1$d \nungleich: %2$d</string>
+
+    <!-- fehler -->
+    <string name="server_error">Server Fehler</string>
+    <string name="network_error">Netzwerkfehler</string>
+    <string name="diff_error">Fehler beim Abgleich</string>
+
+</resources>
