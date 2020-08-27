@@ -40,5 +40,6 @@
     <string name="server_error">Server Fehler</string>
     <string name="network_error">Netzwerkfehler</string>
     <string name="diff_error">Fehler beim Abgleich</string>
+    <string name="internal_error">Interner Fehler</string>
 
 </resources>

@@ -60,6 +60,7 @@ class API (
             .add("APP_program", py_programm)
             .add("APP_threads", prozessanzahl)
             .build()
+
         sendtoserver(programm = programm,formBody = formBody)
 
     }
@@ -84,16 +85,21 @@ class API (
 
             override fun onResponse(call: Call, response: Response) {
                 initrespone(response.body!!.string())
-                try {
-                    Thread {
-                        when (programm) {
-                            "reader" -> ausgabe_reader()
-                            "filename_reader" -> datenabgleich()
-                            "start" -> programm_bearbeiten()
-                        }
-                    }.start()
-                }catch (e: Exception){
-                    e.printStackTrace()
+
+                if(responsestring.getString("error")!= "none") {
+                    try {
+                        Thread {
+                            when (programm) {
+                                "reader" -> ausgabe_reader()
+                                "filename_reader" -> datenabgleich()
+                                "start" -> programm_bearbeiten()
+                            }
+                        }.start()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        anzeige.text = context.getString(R.string.internal_error)
+                    }
+                }else{
                     anzeige.text = this@API.context.getString(R.string.server_error)
                 }
             }
@@ -111,7 +117,7 @@ class API (
         try {
             val json = responsestring
             status =1
-            val db = json.getString("db").toInt()
+            val db = json.getInt("db")
             status= 2
             val stg_server = json.getInt("stg")
             status= 3
