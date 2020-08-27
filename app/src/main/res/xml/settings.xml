@@ -28,67 +28,6 @@
             android:summary="0"
             android:title="Token" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Sever">
-
-        <EditTextPreference
-            android:defaultValue="Database"
-            android:icon="@drawable/ic_baseline_account_circle_24"
-            android:key="key_py_user"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="Database"
-            android:title="@string/database_user" />
-        <EditTextPreference
-            android:defaultValue="pwd"
-            android:icon="@drawable/ic_baseline_vpn_key_24"
-            android:key="key_py_pwd"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="****"
-            android:title="@string/database_pwd" />
-        <EditTextPreference
-            android:defaultValue="1.1.1.1"
-            android:icon="@drawable/ic_baseline_cloud_upload_24"
-            android:key="key_py_ip"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="1.1.1.1"
-            android:title="@string/database_ip" />
-
-        <EditTextPreference
-            android:defaultValue="portnummer"
-            android:icon="@drawable/ic_baseline_post_add_24"
-            android:key="key_py_port"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="3306"
-            android:title="@string/database_Port" />
-        <EditTextPreference
-            android:defaultValue="car"
-            android:icon="@drawable/ic_baseline_post_add_24"
-            android:key="key_py_bau"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="car"
-            android:title="@string/database_Schema" />
-
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/programm"
-            android:entryValues="@array/programmwerte"
-            android:icon="@drawable/ic_baseline_apps_24"
-            android:key="key_py_program"
-            android:title="@string/Program_selection" />
-        <EditTextPreference
-            android:defaultValue='"1"'
-            android:icon="@drawable/ic_baseline_all_inbox_24"
-            android:key="key_py_prozess"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="1"
-            android:title="@string/process_int" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/evo">
 
         <EditTextPreference

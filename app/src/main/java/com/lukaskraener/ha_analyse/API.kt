@@ -47,18 +47,11 @@ class API (
         processbar.visibility= View.GONE
     }
 
-    fun programmstart(dbuser: String, dbpwd: String, dbip: String, dbschema: String, dbport: String, py_programm:String, prozessanzahl: String) {
+    fun programmstart() {
         val programm= "start"
         val formBody: RequestBody = FormBody.Builder()
             .add("APP", programm)
             .add("token", token)
-            .add("APP_user", dbuser)
-            .add("APP_password", dbpwd)
-            .add("APP_adress", dbip)
-            .add("APP_schema", dbschema)
-            .add("APP_port", dbport)
-            .add("APP_program", py_programm)
-            .add("APP_threads", prozessanzahl)
             .build()
 
         sendtoserver(programm = programm,formBody = formBody)

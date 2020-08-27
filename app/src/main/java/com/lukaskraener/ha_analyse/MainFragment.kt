@@ -39,13 +39,6 @@ class MainFragment : Fragment() {
     private var apiwebadresse = ""
     private var apitoken = ""
     private var auswertungip = ""
-    private  var pyip = ""
-    private  var pyuser = ""
-    private  var pypwd = ""
-    private  var pyport = ""
-    private var pyschema= ""
-    private  var pyprozess = ""
-    private var pyprogram = ""
     private lateinit var thiscontext: Context
     private val notficationsid= 223
     private val CHANEL_ID = "TEst_1234"
@@ -73,13 +66,6 @@ class MainFragment : Fragment() {
         }
         apiwebadresse= apiprotokoll+apipip
         auswertungip= sharedPreference.getString("key_auswertung_url", "")!!
-        pyuser = sharedPreference.getString("key_py_user", "")!!
-        pypwd = sharedPreference.getString("key_py_pwd", "")!!
-        pyip = sharedPreference.getString("key_py_ip", "")!!
-        pyport = sharedPreference.getString("key_py_port", "")!!
-        pyschema = sharedPreference.getString("key_py_bau", "")!!
-        pyprogram = sharedPreference.getString("key_py_program", "")!!
-        pyprozess = sharedPreference.getString("key_py_prozess", "")!!
     }
 
     private fun loadUI(){
@@ -120,7 +106,7 @@ class MainFragment : Fragment() {
         loadUI()
 
         btn_calc.setOnClickListener {
-            API(anzeiges = tv_calc_fertig,tokens = apitoken,urls =apiwebadresse,context = thiscontext).programmstart(dbip = pyip, dbport = pyport,dbpwd = pypwd,dbschema = pyschema,dbuser = pyuser, py_programm = pyprogram,prozessanzahl = pyprozess)
+            API(anzeiges = tv_calc_fertig,tokens = apitoken,urls =apiwebadresse,context = thiscontext).programmstart()
         }
 
         btn_uploader.setOnClickListener {
@@ -132,7 +118,6 @@ class MainFragment : Fragment() {
             startActivity(openURL)
 
         }
-    println(pyprogram)
         auswertung.setOnClickListener {
             val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse(auswertungip)
