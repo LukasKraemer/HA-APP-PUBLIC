@@ -1,7 +1,5 @@
 package com.lukaskraener.ha_analyse;
 
-import android.app.NotificationManager;
-
 import java.io.File;
 import java.io.IOException;
 import okhttp3.Call;
@@ -34,11 +32,11 @@ public class UploaderAPI {
 
                 @Override
                 public void onFailure(final Call call, final IOException e) {
-                    // Handle the error
+
                 }
 
                 @Override
-                public void onResponse(final Call call, final Response response) throws IOException {
+                public void onResponse(final Call call, final Response response) {
                 }
             });
             return true;

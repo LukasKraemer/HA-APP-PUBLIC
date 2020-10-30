@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="programm">
-        <item>beide</item>
-        <item>nur hochladen</item>
-        <item>nur übersichtswerte berechnen</item>
-    </string-array>
 
-    <string-array name="programmwerte">
-        <item>beide</item>
-        <item>uploader</item>
-        <item>ubersicht</item>
-    </string-array>
 </resources>

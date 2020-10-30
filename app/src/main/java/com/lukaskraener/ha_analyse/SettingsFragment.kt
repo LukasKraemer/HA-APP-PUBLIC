@@ -52,20 +52,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         preapiip?.summaryProvider = Preference.SummaryProvider<EditTextPreference>{ preference->
             val text = preference.text.toString()
-            val regexip = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/[a-zA-Z0-9/_+-.]*".toRegex()
-            val regexhostname = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])/[a-zA-Z0-9/_+-.]*".toRegex()
-            if(regexip.matches(text)|| regexhostname.matches(text)){
+            val checker = Data_validiator()
+            if(checker.isValidHostname(text)|| checker.isValidIP(text)){
                 text
             } else{
-                "Synaktisch falsche Eingabe"
+                getString(R.string.wrongvalue)
             }
         }
 
         preapitoken?.summaryProvider= Preference.SummaryProvider<EditTextPreference> {preference ->
             val text = preference.text
             if(TextUtils.isEmpty(text)){
-                "Kein Token wurde gesetzt"
-            }else{
+                getString(R.string.notoken)
+                }else{
                  "*".repeat(text.length)
             }
 

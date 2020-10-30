@@ -2,17 +2,21 @@ package com.lukaskraener.ha_analyse
 
 
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.view.View
-import android.widget.ProgressBar
+import android.os.Build
+import android.os.LocaleList
 import android.widget.TextView
 import okhttp3.*
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
-class API (
+
+class API(
     val tokens: String,
     val urls: String,
     val anzeiges: TextView,
@@ -24,117 +28,132 @@ class API (
     private val anzeige = anzeiges
     private lateinit var responsestring: JSONObject
 
-    fun initrespone(response:String){
+    fun initrespone(response: String){
         this.responsestring = JSONObject(response)
     }
 
     fun reader( ) {
-        val programm= "reader"
-        val formBody: RequestBody = FormBody.Builder()
-            .add("APP", programm)
-            .add("token", token)
-            .build()
-        sendtoserver(programm = programm, formBody = formBody)
+        sendit("reader")
     }
 
-    fun uploader(processbar : ProgressBar){
-        val programm = "filename_reader"
-        val formBody: RequestBody = FormBody.Builder()
-            .add("APP", programm)
-            .add("token", token)
-            .build()
-        sendtoserver(programm = programm,formBody = formBody)
-        processbar.visibility= View.GONE
+
+    fun uploader(){
+        sendit("filename_reader")
     }
+
 
     fun programmstart() {
-        val programm= "start"
-        val formBody: RequestBody = FormBody.Builder()
-            .add("APP", programm)
-            .add("token", token)
-            .build()
-
-        sendtoserver(programm = programm,formBody = formBody)
-
+        sendit("start");
     }
 
-    private fun uploader_handler(files:Set<File>) {
-        var r: Int=0
-        var f:Int = 0
-        var i : Int = 0
-        val notificationtext= this.context.getString(R.string.notification_uploader)
-        MainFragment().testbenahritigung (notificationtext, 0, files.size)
+    @SuppressLint("StringFormatInvalid")
+    private fun uploaderHandler(files: Set<File>, common: Int) {
+        var r=0
+        var f = 0
+        print(files)
         files.forEach{
             if (UploaderAPI.uploadFile(url, it, token)) { r++ } else { f++ }
-            MainFragment().testbenahritigung (notificationtext, r+f, files.size)
         }
-        anzeige.text = this.context.getString(R.string.uploader_output, r, f)
+        anzeige.text = this.context.getString(R.string.uploader_output, r, f, common)
     }
 
-    private fun sendtoserver(formBody: RequestBody, programm: String){
-        val request = Request.Builder().url(this.url).post(formBody).build()
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
 
-            override fun onResponse(call: Call, response: Response) {
-                initrespone(response.body!!.string())
 
-                if(responsestring.getString("error")!= "none") {
-                    try {
-                        Thread {
-                            when (programm) {
-                                "reader" -> ausgabe_reader()
-                                "filename_reader" -> datenabgleich()
-                                "start" -> programm_bearbeiten()
-                            }
-                        }.start()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        anzeige.text = context.getString(R.string.internal_error)
+    private fun sendit(programm: String) {
+        try {
+
+
+            val request = Request.Builder()
+                .url(this.url + "?APP=" + programm)
+                .header("User-Agent", "HA-Tool Android")
+                .addHeader("Accept", "application/json")
+                .addHeader("Accept-Language", getLanguage())
+                .addHeader("Authorization", token)
+                .addHeader("Connection","keep-alive")
+                .addHeader("Accept-Charset","utf-8")
+                .build()
+
+            var time: Long = 10
+            if (programm == "start") {
+                time = 300
+            }
+            val client = OkHttpClient().newBuilder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(time, TimeUnit.SECONDS)
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+
+                override fun onResponse(call: Call, response: Response) {
+                    initrespone(response.body!!.string())
+
+                    if (responsestring.getString("error") == "none") {
+                        try {
+                            Thread {
+                                when (programm) {
+                                    "reader" -> ausgabeReader()
+                                    "filename_reader" -> datenabgleich()
+                                    "start" -> programmBearbeiten()
+                                }
+                            }.start()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            anzeige.text = context.getString(R.string.internal_error)
+                        }
+                    } else {
+                        anzeige.text = this@API.context.getString(R.string.server_error)+responsestring.getString("error")
                     }
-                }else{
-                    anzeige.text = this@API.context.getString(R.string.server_error)
                 }
-            }
 
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-                anzeige.text = this@API.context.getString(R.string.network_error)
-            }
-        })
+                override fun onFailure(call: Call, e: IOException) {
+                    e.printStackTrace()
+
+                    anzeige.text = this@API.context.getString(R.string.network_error)
+                }
+            })
+
+        }catch (e: Exception){
+            anzeige.text = this@API.context.getString(R.string.network_error)
+        }
     }
 
 
-    private fun ausgabe_reader (){
+    private fun ausgabeReader (){
         var status = 0
         try {
             val json = responsestring
             status =1
             val db = json.getInt("db")
             status= 2
-            val stg_server = json.getInt("stg")
+            val stgServer = json.getInt("stg")
             status= 3
             val stg = Readfiles().reader().size
             status=4
-            anzeige.text = this.context.getString(R.string.reader_output, stg,db, stg - stg_server, stg_server)
+            anzeige.text = this.context.getString(
+                R.string.reader_output,
+                stg,
+                db,
+                stg - stgServer,
+                stgServer
+            )
                // "Lokal: " + stg.toString() + "\nDatenbank: " + db.toString() + "\nDfferenz: " + (stg - stg_server).toString() + "\nServer Speicher: " + stg_server.toString()
         }catch (e: Exception){
             e.printStackTrace()
-            var fehler :String = ""
+            var fehler = ""
             when(status){
-                0 -> fehler="unerwarte Antwort vom Server"
-                1 -> fehler= "Datenbank konnnte nicht ausgelesen werden"
-                2 -> fehler ="Fehler auf dem Serverspeicher"
-                3 -> fehler ="Fehler beim Einladen des lokalen Speicher"
-                4 -> fehler ="Werte können nicht ausgegben werden"
+                0 -> fehler = "unerwarte Antwort vom Server"
+                1 -> fehler = "Datenbank konnnte nicht ausgelesen werden"
+                2 -> fehler = "Fehler auf dem Serverspeicher"
+                3 -> fehler = "Fehler beim Einladen des lokalen Speicher"
+                4 -> fehler = "Werte können nicht ausgegben werden"
             }
             anzeige.text = status.toString() + " - "+ fehler
         }
     }
 
 
-    private fun programm_bearbeiten(){
-        try{anzeige.text = responsestring.getString("shell")}catch (e : Exception){anzeige.text="Fehler bei Ausgabe"}
+    private fun programmBearbeiten(){
+        try{anzeige.text = this.responsestring.getString("shell").toString()}catch (e: Exception){anzeige.text="Fehler bei Ausgabe"}
     }
 
     private fun datenabgleich(){
@@ -148,6 +167,7 @@ class API (
                     for (i in 0..json.get("size").toString().toInt()-1) {
                         if (it.name == serverfilelist[i]) {
                             gleich.add(it)
+                            print(it)
                         }
                     }
                 }
@@ -158,12 +178,28 @@ class API (
             }
             val difference = files.toSet().minus(gleich.toSet())
             if( gleich.size + difference.size == files.size) {
-                anzeige.text = this.context.getString(R.string.diff_output, gleich.size, difference.size )
+                anzeige.text = this.context.getString(
+                    R.string.diff_output,
+                    gleich.size,
+                    difference.size
+                )
             }else{
-                anzeige.text = this.context.getString(R.string.diff_error)+"\n"+this.context.getString(R.string.diff_output, gleich.size, difference.size )
+                anzeige.text = this.context.getString(R.string.diff_error)+"\n"+this.context.getString(
+                    R.string.diff_output,
+                    gleich.size,
+                    difference.size
+                )
             }
-            uploader_handler(files = difference)
+            uploaderHandler(files = difference,common = gleich.size)
         }catch (e: Exception){
             e.printStackTrace()}
     }
+    private fun getLanguage(): String {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return LocaleList.getDefault().toLanguageTags();
+        } else {
+            return Locale.getDefault().getLanguage();
+        }
+    }
+
 }

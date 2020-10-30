@@ -24,14 +24,16 @@
     <string name="evo">Evaluation</string>
     <string name="evo_ip">Link to Evaluation</string>
     <string name="noprogramm">no programm selected</string>
+    <string name="wrongvalue">wrong value</string>
+    <string name="notoken">no token </string>
 
     <!--functions  mainfrag-->
     <string name="finished">finished</string>
     <string name="notification_uploader">Upload started</string>
 
     <!-- sucess-->
-    <string name="uploader_output">Successfully %1$d failed %2$d</string>
-    <string name="reader_output">Local: %1$d \nDatabase: %2$d \difference: %3$d \nServer storage: %4$d</string>
+    <string name="uploader_output">Successfully %1$d \nfailed %2$d \ncommon %3$d</string>
+    <string name="reader_output">Local: %1$d \nDatabase: %2$d \ndifference: %3$d \nServer storage: %4$d</string>
     <string name="founded_output">Founded: %1$d</string>
     <string name="diff_output">"common: %1$d \nuncommon: %2$d</string>
 

@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- APP -->
-    <string name="app_name">HA Analayse</string>
+    <string name="app_name">HA-Analayse</string>
     <string name="noti_name">Fortschrittsanzeige</string>
-    <string name="noti_desc">Zeigt den Fortschritt des Uplaoder an</string>
+    <string name="noti_desc">Zeigt den Fortschritt des Uplaoders an</string>
 
     <!--Main Fragment -->
-    <string name="title_activity_website">website</string>
-    <string name="notstarted">nicht gestartet</string>
-    <string name="open_evaluation">Öffne Auswertung</string>
-    <string name="dev">Drittanbieter Software vom hybrid assistant app</string>
+    <string name="title_activity_website">Website</string>
+    <string name="notstarted">Nicht gestartet!</string>
+    <string name="open_evaluation">Öffne Auswertung...</string>
+    <string name="dev">Drittanbieter Software der Hybrid Assistant-App</string>
 
     <!--Settings Fragment -->
-    <string name="API_Host">IP Adresse:</string>
+    <string name="API_Host">IP-Adresse:</string>
     <string name="ssl_support">Server unterstützt SSL</string>
 
-    <string name="database_ip">Datenbank IP-Adresse</string>
-    <string name="database_user">Datenbank Nutzer</string>
-    <string name="database_pwd">Datenbank Passwort</string>
-    <string name="database_Schema">Datenbank Schema</string>
-    <string name="database_Port">Datenbank Port</string>
-    <string name="Program_selection">Programmauswahl </string>
-    <string name="process_int">Prozessanzahl </string>
-    <string name="evo">Auswertung</string>
-    <string name="evo_ip">Link zur Auswertung</string>
-    <string name="noprogramm">kein Programm ausgewählt</string>
-
+    <string name="database_ip">Datenbank IP-Adresse: </string>
+    <string name="database_user">Datenbank Nutzer: </string>
+    <string name="database_pwd">Datenbank Passwort: </string>
+    <string name="database_Schema">Datenbank Schema: </string>
+    <string name="database_Port">Datenbank Port: </string>
+    <string name="Program_selection">Programmauswahl: </string>
+    <string name="process_int">Prozessanzahl: </string>
+    <string name="evo">Auswertung: </string>
+    <string name="evo_ip">Link zur Auswertung: </string>
+    <string name="noprogramm">Kein Programm ausgewählt!</string>
+    <string name="wrongvalue">falscher Wert</string>
+    <string name="notoken">kein Token </string>
     <!--functions  mainfrag-->
-    <string name="finished">Fertig</string>
-    <string name="notification_uploader">hochladen begonnen</string>
+    <string name="finished">Fertig!</string>
+    <string name="notification_uploader">Hochladen begonnen!</string>
 
     <!-- finish -->
-    <string name="uploader_output">Erfolgreich %1$d \n fehlerhaft %2$d</string>
-    <string name="reader_output">Lokal: %1$d \nDatenbank: %2$d \nDfferenz: %3$d \nServer Speicher: %4$d</string>
+    <string name="uploader_output">Erfolgreich:%1$d \nFehlerhaft:%2$d \ngleich:%3$d</string>
+    <string name="reader_output">Lokal:%1$d \nDatenbank:%2$d \nDifferenz:%3$d \nServer-Speicher:%4$d</string>
     <string name="founded_output">Gefunden: %1$d</string>
     <string name="diff_output">"Gleich: %1$d \nungleich: %2$d</string>
 
     <!-- fehler -->
-    <string name="server_error">Server Fehler</string>
-    <string name="network_error">Netzwerkfehler</string>
-    <string name="diff_error">Fehler beim Abgleich</string>
-    <string name="internal_error">Interner Fehler</string>
+    <string name="server_error">Server Fehler!</string>
+    <string name="network_error">Netzwerkfehler!</string>
+    <string name="diff_error">Fehler beim Abgleich!</string>
+    <string name="internal_error">Interner Fehler!</string>
 
 </resources>
