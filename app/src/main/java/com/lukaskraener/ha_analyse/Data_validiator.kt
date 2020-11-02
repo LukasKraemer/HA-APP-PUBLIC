@@ -1,6 +1,6 @@
 package com.lukaskraener.ha_analyse
 
-class Data_validiator() {
+class Data_validiator {
 
 
 fun isValidHostname(a:String):Boolean{

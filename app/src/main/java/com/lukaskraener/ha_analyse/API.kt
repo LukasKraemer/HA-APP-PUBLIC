@@ -43,7 +43,7 @@ class API(
 
 
     fun programmstart() {
-        sendit("start");
+        sendit("start")
     }
 
     @SuppressLint("StringFormatInvalid")
@@ -62,7 +62,6 @@ class API(
     private fun sendit(programm: String) {
         try {
 
-
             val request = Request.Builder()
                 .url(this.url + "?APP=" + programm)
                 .header("User-Agent", "HA-Tool Android")
@@ -73,10 +72,8 @@ class API(
                 .addHeader("Accept-Charset","utf-8")
                 .build()
 
-            var time: Long = 10
-            if (programm == "start") {
-                time = 300
-            }
+            val time: Long = if (programm=="Start") {300}else{10}
+
             val client = OkHttpClient().newBuilder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(time, TimeUnit.SECONDS)
@@ -196,9 +193,9 @@ class API(
     }
     private fun getLanguage(): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return LocaleList.getDefault().toLanguageTags();
+            return LocaleList.getDefault().toLanguageTags()
         } else {
-            return Locale.getDefault().getLanguage();
+            return Locale.getDefault().language
         }
     }
 

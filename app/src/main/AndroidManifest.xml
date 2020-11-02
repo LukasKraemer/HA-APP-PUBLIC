@@ -16,6 +16,16 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         tools:targetApi="q">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.lukaskraener.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            ...
+        </provider>
+
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

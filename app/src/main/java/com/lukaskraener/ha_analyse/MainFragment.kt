@@ -94,12 +94,22 @@ class MainFragment : Fragment() {
         thiscontext = container!!.context
         loadUI()
 
+
+        //Thread { context?.let { SelfUpdater(it).download(url = apipip) } }.start()
+
+
+
         btn_calc.setOnClickListener {
-            API(anzeiges = tv_calc_fertig,tokens = apitoken,urls =apiwebadresse,context = thiscontext).programmstart()
+            API(
+                anzeiges = tv_calc_fertig,
+                tokens = apitoken,
+                urls = apiwebadresse,
+                context = thiscontext
+            ).programmstart()
         }
 
         btnUploader.setOnClickListener {
-            uploader(uploaderfertiganzeige,token = apitoken,ip = apiwebadresse)
+            uploader(uploaderfertiganzeige, token = apitoken, ip = apiwebadresse)
         }
         rootview.findViewById<TextView>(R.id.tv_hateam).setOnClickListener {
             val openURL = Intent(Intent.ACTION_VIEW)
@@ -121,7 +131,7 @@ class MainFragment : Fragment() {
 
         }
         btnSearch.setOnClickListener {
-            API(apitoken,apiwebadresse, anzeige_oben, context = thiscontext).reader()
+            API(apitoken, apiwebadresse, anzeige_oben, context = thiscontext).reader()
         }
 
         btnSwitch.setOnClickListener {
@@ -130,11 +140,11 @@ class MainFragment : Fragment() {
         return rootview
     }//onview Close
 
-    private fun uploader(display: TextView, token:String, ip:String){
+    private fun uploader(display: TextView, token: String, ip: String){
         Thread(Runnable {
             try {
-                API(tokens = token,urls = ip,anzeiges = display, context = thiscontext).uploader()
-            }catch(e: Exception) {
+                API(tokens = token, urls = ip, anzeiges = display, context = thiscontext).uploader()
+            } catch (e: Exception) {
                 println(e.printStackTrace())
             }
         }).start()
