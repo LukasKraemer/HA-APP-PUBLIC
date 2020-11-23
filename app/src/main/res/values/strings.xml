@@ -1,0 +1,47 @@
+<resources>
+    <!-- APP -->
+    <string name="app_name">HA-Analyse</string>
+    <string name="noti_name">Progressbar</string>
+    <string name="noti_desc">Shows the progress of the uploader</string>
+
+    <!--Main Fragment -->
+    <string name="title_activity_website">website</string>
+    <string name="notstarted">not started yet</string>
+    <string name="open_evaluation">open evaluation</string>
+    <string name="dev">Third-party software from the hybrid assistant app</string>
+
+    <!--Settings Fragment -->
+    <string name="API_Host">Host:</string>
+    <string name="ssl_support">Server supports SSL</string>
+
+    <string name="database_ip">Database Address</string>
+    <string name="database_user">Database User</string>
+    <string name="database_pwd">Database Password</string>
+    <string name="database_Schema">Database Schema</string>
+    <string name="database_Port">Database Port</string>
+    <string name="Program_selection">Program Selection </string>
+    <string name="process_int">Number of processes</string>
+    <string name="evo">Evaluation</string>
+    <string name="evo_ip">Link to Evaluation</string>
+    <string name="noprogramm">no programm selected</string>
+    <string name="wrongvalue">wrong value</string>
+    <string name="notoken">no token </string>
+
+    <!--functions  mainfrag-->
+    <string name="finished">finished</string>
+    <string name="notification_uploader">Upload started</string>
+
+    <!-- sucess-->
+    <string name="uploader_output">Successfully %1$d \nfailed %2$d \ncommon %3$d</string>
+    <string name="reader_output">Local: %1$d \nDatabase: %2$d \ndifference: %3$d \nServer storage: %4$d</string>
+    <string name="founded_output">Founded: %1$d</string>
+    <string name="diff_output">"common: %1$d \nuncommon: %2$d</string>
+
+    <!-- error -->
+    <string name="server_error">Server Error</string>
+    <string name="network_error">Network Error</string>
+    <string name="diff_error">Adjustment error</string>
+    <string name="internal_error">internal error</string>
+
+
+</resources>

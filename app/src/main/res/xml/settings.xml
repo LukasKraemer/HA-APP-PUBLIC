@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme">
+
+    <PreferenceCategory android:title="API">
+
+        <EditTextPreference
+            android:defaultValue="129.168.10.10"
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
+            android:key="key_api_ip"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="129.168.10.10"
+            android:title="@string/API_Host" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_baseline_https_24"
+            android:key="key_api_protokoll"
+            android:summary="@string/ssl_support"
+            android:title="HTTPS?" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_baseline_vpn_key_24"
+            android:key="key_api_token"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="0"
+            android:title="Token" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/evo">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:icon="@drawable/ic_baseline_web_24"
+            android:key="key_auswertung_url"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary=""
+            android:title="@string/evo_ip"
+            app:defaultValue="1.1.1.1" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
