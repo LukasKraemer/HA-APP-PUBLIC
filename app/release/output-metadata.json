@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "com.lukaskraener.ha_analyse",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",

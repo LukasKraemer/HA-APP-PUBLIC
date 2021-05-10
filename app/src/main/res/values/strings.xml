@@ -43,5 +43,11 @@
     <string name="diff_error">Adjustment error</string>
     <string name="internal_error">internal error</string>
 
+    <string name="uploadfinish">Upload finished</string>
+    <string name="scheduled">scheduled task</string>
+    <string name="values_calculated">Values calculated</string>
+    <string name="scheduled_error">scheduled Error</string>
 
+    <string name="username">Username</string>
+    <string name="passwd">Password</string>
 </resources>

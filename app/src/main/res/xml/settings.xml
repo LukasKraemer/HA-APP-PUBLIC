@@ -20,13 +20,25 @@
             android:summary="@string/ssl_support"
             android:title="HTTPS?" />
         <EditTextPreference
-            android:defaultValue="0"
+            android:key="username"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/username" />
+        <EditTextPreference
+            android:key="passwd"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/passwd" />
+        <EditTextPreference
             android:icon="@drawable/ic_baseline_vpn_key_24"
             android:key="key_api_token"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="0"
             android:title="Token" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="api_scheduled"
+            android:title="@string/scheduled" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/evo">
 

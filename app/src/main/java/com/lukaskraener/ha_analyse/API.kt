@@ -2,34 +2,61 @@ package com.lukaskraener.ha_analyse
 
 
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
-import android.os.LocaleList
 import android.widget.TextView
+import androidx.preference.PreferenceManager
+import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.net.SocketTimeoutException
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
 class API(
-    val tokens: String,
-    val urls: String,
-    val anzeiges: TextView,
+    val anzeiges: TextView?,
     val context: Context
 )
 {
-    private val token = tokens
-    private val url = urls
+    private val token = String.format("Bearer %s", PreferenceManager.getDefaultSharedPreferences(context).getString(
+        "key_api_token",
+        ""
+    )!!)
+
+    private var url :String
     private val anzeige = anzeiges
     private lateinit var responsestring: JSONObject
+    private var error: Boolean = true
+
+    init {
+        val apiprotokoll: String
+        apiprotokoll = if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                "key_api_protokoll",
+                true
+            )) {
+            "https://"
+        }else{
+            "http://"
+        }
+        this.url= apiprotokoll+PreferenceManager.getDefaultSharedPreferences(context).getString(
+            "key_api_ip",
+            ""
+        )!!+"/app/"
+    }
 
     fun initrespone(response: String){
-        this.responsestring = JSONObject(response)
+       try {
+           this.responsestring = JSONObject(response)
+           error = false
+
+       }catch (e: java.lang.Exception){
+           this.responsestring = JSONObject("{'error': 'reponse'}")
+           error = true
+       }
+
     }
 
     fun reader( ) {
@@ -38,7 +65,7 @@ class API(
 
 
     fun uploader(){
-        sendit("filename_reader")
+        sendit("filename")
     }
 
 
@@ -46,33 +73,28 @@ class API(
         sendit("start")
     }
 
-    @SuppressLint("StringFormatInvalid")
-    private fun uploaderHandler(files: Set<File>, common: Int) {
-        var r=0
-        var f = 0
-        print(files)
-        files.forEach{
-            if (UploaderAPI.uploadFile(url, it, token)) { r++ } else { f++ }
+
+    private fun uploaderHandler(files: Set<File>) {
+        runBlocking {
+            files.forEach{
+                UploaderAPI.uploadFile(url, it, token)
+            }
         }
-        anzeige.text = this.context.getString(R.string.uploader_output, r, f, common)
+
     }
 
 
 
-    private fun sendit(programm: String) {
+    private fun sendit(program: String) {
         try {
 
             val request = Request.Builder()
-                .url(this.url + "?APP=" + programm)
+                .url(this.url + program)
                 .header("User-Agent", "HA-Tool Android")
-                .addHeader("Accept", "application/json")
-                .addHeader("Accept-Language", getLanguage())
                 .addHeader("Authorization", token)
-                .addHeader("Connection","keep-alive")
-                .addHeader("Accept-Charset","utf-8")
                 .build()
 
-            val time: Long = if (programm=="Start") {300}else{10}
+            val time: Long = if (program=="start") {300}else{15}
 
             val client = OkHttpClient().newBuilder()
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -83,50 +105,48 @@ class API(
 
                 override fun onResponse(call: Call, response: Response) {
                     initrespone(response.body!!.string())
-
-                    if (responsestring.getString("error") == "none") {
+                    if (!error) {
                         try {
                             Thread {
-                                when (programm) {
+                                when (program) {
                                     "reader" -> ausgabeReader()
-                                    "filename_reader" -> datenabgleich()
+                                    "filename" -> datenabgleich()
                                     "start" -> programmBearbeiten()
                                 }
                             }.start()
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            anzeige.text = context.getString(R.string.internal_error)
+                            anzeige?.text = context.getString(R.string.internal_error)
                         }
                     } else {
-                        anzeige.text = this@API.context.getString(R.string.server_error)+responsestring.getString("error")
+                        anzeige?.text =
+                            this@API.context.getString(R.string.server_error) + responsestring.getString(
+                                "error"
+                            )
                     }
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
 
-                    anzeige.text = this@API.context.getString(R.string.network_error)
+                    anzeige?.text = this@API.context.getString(R.string.network_error)
                 }
             })
-
+        }catch (e: SocketTimeoutException){
+            anzeige?.text = "time out"
         }catch (e: Exception){
-            anzeige.text = this@API.context.getString(R.string.network_error)
+            anzeige?.text = this@API.context.getString(R.string.network_error)
         }
     }
 
 
     private fun ausgabeReader (){
-        var status = 0
         try {
             val json = responsestring
-            status =1
-            val db = json.getInt("db")
-            status= 2
-            val stgServer = json.getInt("stg")
-            status= 3
+            val db = json.getInt("databaseLast")
+            val stgServer = json.getInt("filesStorage")
             val stg = Readfiles().reader().size
-            status=4
-            anzeige.text = this.context.getString(
+            anzeige?.text = this.context.getString(
                 R.string.reader_output,
                 stg,
                 db,
@@ -136,67 +156,50 @@ class API(
                // "Lokal: " + stg.toString() + "\nDatenbank: " + db.toString() + "\nDfferenz: " + (stg - stg_server).toString() + "\nServer Speicher: " + stg_server.toString()
         }catch (e: Exception){
             e.printStackTrace()
-            var fehler = ""
-            when(status){
-                0 -> fehler = "unerwarte Antwort vom Server"
-                1 -> fehler = "Datenbank konnnte nicht ausgelesen werden"
-                2 -> fehler = "Fehler auf dem Serverspeicher"
-                3 -> fehler = "Fehler beim Einladen des lokalen Speicher"
-                4 -> fehler = "Werte können nicht ausgegben werden"
-            }
-            anzeige.text = status.toString() + " - "+ fehler
         }
     }
 
 
     private fun programmBearbeiten(){
-        try{anzeige.text = this.responsestring.getString("shell").toString()}catch (e: Exception){anzeige.text="Fehler bei Ausgabe"}
+        try{anzeige?.text = this.responsestring.getString("shell").toString()}catch (e: Exception){anzeige?.text="Fehler bei Ausgabe"}
     }
 
     private fun datenabgleich(){
         try {
-            val json = responsestring
             val files = Readfiles().reader()
             val gleich = ArrayList<File>()
-            val serverfilelist = json.getJSONArray("files")
+            val serverfilelist = responsestring.getJSONArray("filename")
             try {
                 files.forEach {
-                    for (i in 0..json.get("size").toString().toInt()-1) {
+                    for (i in 0 until serverfilelist.length()) {
                         if (it.name == serverfilelist[i]) {
                             gleich.add(it)
-                            print(it)
                         }
                     }
                 }
-                anzeige.text=this.context.getString(R.string.founded_output, gleich.size)
+                anzeige?.text=this.context.getString(R.string.founded_output, gleich.size)
             }catch (e: Exception){
                 e.printStackTrace()
-                anzeige.text=this.context.getString(R.string.diff_error)
+                anzeige?.text=this.context.getString(R.string.diff_error)
             }
             val difference = files.toSet().minus(gleich.toSet())
             if( gleich.size + difference.size == files.size) {
-                anzeige.text = this.context.getString(
+                anzeige?.text = this.context.getString(
                     R.string.diff_output,
                     gleich.size,
                     difference.size
                 )
             }else{
-                anzeige.text = this.context.getString(R.string.diff_error)+"\n"+this.context.getString(
+                anzeige?.text = this.context.getString(R.string.diff_error)+"\n"+this.context.getString(
                     R.string.diff_output,
                     gleich.size,
                     difference.size
                 )
             }
-            uploaderHandler(files = difference,common = gleich.size)
+            uploaderHandler(difference)
         }catch (e: Exception){
             e.printStackTrace()}
     }
-    private fun getLanguage(): String {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return LocaleList.getDefault().toLanguageTags()
-        } else {
-            return Locale.getDefault().language
-        }
-    }
+
 
 }

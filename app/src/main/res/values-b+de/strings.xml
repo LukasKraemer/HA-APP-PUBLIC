@@ -43,4 +43,12 @@
     <string name="diff_error">Fehler beim Abgleich!</string>
     <string name="internal_error">Interner Fehler!</string>
 
+    <string name="uploadfinish">Upload fertig</string>
+    <string name="scheduled">Zeitgesteuerten Prozess</string>
+    <string name="values_calculated">Werte berechnet</string>
+    <string name="scheduled_error">Fehler beim Zeitgesteuerten Prozess</string>
+
+
+    <string name="username">Benutzername</string>
+    <string name="passwd">Password</string>
 </resources>

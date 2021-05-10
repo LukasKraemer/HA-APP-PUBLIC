@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -13,18 +14,20 @@ import okhttp3.Response;
 
 public class UploaderAPI {
 
-    public static Boolean uploadFile(String serverURL, File file, String token) {
+    public static void uploadFile(String serverURL, File file, String token) {
         try {
             OkHttpClient client = new OkHttpClient();
+
             RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("uploadedfile", file.getName(),
-                            RequestBody.create(MediaType.parse("text/plain"), file))
-                    .addFormDataPart("APP", "uploader")
-                    .addFormDataPart("token", token)
+                    .addFormDataPart("txtFile", file.getName(),
+                            RequestBody.create (file, MediaType.parse("text/plain")))
+
                     .build();
 
             Request request = new Request.Builder()
-                    .url(serverURL)
+                    .url(serverURL+"filename")
+                    .header("User-Agent", "HA-Tool Android")
+                    .addHeader("Authorization", token)
                     .post(requestBody)
                     .build();
 
@@ -32,16 +35,14 @@ public class UploaderAPI {
 
                 @Override
                 public void onFailure(final Call call, final IOException e) {
-
                 }
 
                 @Override
-                public void onResponse(final Call call, final Response response) {
+                public void onResponse(final Call call, final Response response) throws IOException {
                 }
             });
-            return true;
         } catch (Exception ex) {
-            return false;
+            ex.printStackTrace();
         }
     }
 
