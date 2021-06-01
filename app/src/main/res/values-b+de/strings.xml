@@ -8,6 +8,7 @@
     <!--Main Fragment -->
     <string name="title_activity_website">Website</string>
     <string name="notstarted">Nicht gestartet!</string>
+    <string name="started">Gestartet\nBitte warten</string>
     <string name="open_evaluation">Öffne Auswertung...</string>
     <string name="dev">Drittanbieter Software der Hybrid Assistant-App</string>
 

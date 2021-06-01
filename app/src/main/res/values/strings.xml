@@ -7,6 +7,7 @@
     <!--Main Fragment -->
     <string name="title_activity_website">website</string>
     <string name="notstarted">not started yet</string>
+    <string name="started">started\nplease wait</string>
     <string name="open_evaluation">open evaluation</string>
     <string name="dev">Third-party software from the hybrid assistant app</string>
 

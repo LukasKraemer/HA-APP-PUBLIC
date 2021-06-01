@@ -2,6 +2,8 @@ package com.lukaskraener.ha_analyse;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -16,7 +18,11 @@ public class UploaderAPI {
 
     public static void uploadFile(String serverURL, File file, String token) {
         try {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build();
 
             RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
                     .addFormDataPart("txtFile", file.getName(),
@@ -30,18 +36,20 @@ public class UploaderAPI {
                     .addHeader("Authorization", token)
                     .post(requestBody)
                     .build();
+                client.newCall(request).enqueue(new Callback() {
 
-            client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(final Call call, final IOException e) {
+                        API.Companion.fail();
+                    }
 
-                @Override
-                public void onFailure(final Call call, final IOException e) {
-                }
-
-                @Override
-                public void onResponse(final Call call, final Response response) throws IOException {
-                }
-            });
-        } catch (Exception ex) {
+                    @Override
+                    public void onResponse(final Call call, final Response response) throws IOException {
+                        API.Companion.sucess();
+                        response.close();
+                    }
+                });
+            } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

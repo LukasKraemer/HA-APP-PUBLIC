@@ -69,8 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         preapiip?.summaryProvider = Preference.SummaryProvider<EditTextPreference>{ preference->
             val text = preference.text.toString()
-            val checker = Data_validiator()
-            if(checker.isValidHostname(text)|| checker.isValidIP(text)){
+            if(DataValidiator.isValidHostname(text)|| DataValidiator.isValidIP(text)){
                 text
             } else{
                 getString(R.string.wrongvalue)
@@ -175,3 +174,4 @@ class SettingsFragment : PreferenceFragmentCompat() {
         username = sharedPreference.getString("username", "")!!
     }
 }
+
