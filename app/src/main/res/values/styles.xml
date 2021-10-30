@@ -10,14 +10,4 @@
         <item name="android:background">@color/brackground2</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:textColorSecondary">@color/Schriftfarbe</item>
-        <item name="android:textColor">@color/Schriftfarbe</item>
-        <item name="android:background">@color/brackground1</item>
-
-
-    </style>
-
 </resources>

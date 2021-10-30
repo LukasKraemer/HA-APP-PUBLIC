@@ -12,125 +12,132 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_calc_fertig"
-            android:layout_width="193dp"
-            android:layout_height="101dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/brackground2"
-            android:paddingTop="10dp"
-            android:text="@string/notstarted"
-            android:textAlignment="center"
-            android:textColor="@color/Schriftfarbe"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_uploader_fertig" />
 
-        <TextView
-            android:id="@+id/tv_uploader_fertig"
-            android:layout_width="194dp"
-            android:layout_height="153dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/brackground2"
-            android:paddingTop="10dp"
-            android:text="@string/notstarted"
-            android:textAlignment="center"
-            android:textColor="@color/Schriftfarbe"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_anzeige_oben" />
-
-        <Button
-            android:id="@+id/btn_auswertung"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:background="@color/vektor"
-            android:backgroundTint="@color/vektor"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/open_evaluation"
-            android:textColor="@color/Schriftfarbe"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_calc" />
-
-        <TextView
-            android:id="@+id/tv_anzeige_oben"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/brackground2"
-            android:paddingTop="10dp"
-            android:text="@string/notstarted"
-            android:textAlignment="center"
-            android:textColor="@color/Schriftfarbe"
-            android:textSize="16sp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/btn_upload"
-            android:layout_width="110dp"
-            android:layout_height="104dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="88dp"
-            android:contentDescription="upload"
-            android:src="@drawable/ic_baseline_cloud_upload_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_search" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/btn_search"
+                        android:layout_width="150dp"
+                        android:layout_height="83dp"
+                        android:contentDescription="@string/search"
+                        android:src="@drawable/ic_baseline_search_24" />
+
+                    <TextView
+                        android:id="@+id/tv_anzeige_oben"
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:background="@color/brackground2"
+                        android:text="@string/notstarted"
+                        android:textAlignment="center"
+                        android:textColor="@color/Schriftfarbe"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/btn_upload"
+                        android:layout_width="150dp"
+                        android:layout_height="104dp"
+                        android:contentDescription="@string/upload"
+                        android:src="@drawable/ic_baseline_cloud_upload_24" />
+
+                    <TextView
+                        android:id="@+id/tv_uploader_fertig"
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:background="@color/brackground2"
+                        android:text="@string/notstarted"
+                        android:textAlignment="center"
+                        android:textColor="@color/Schriftfarbe"
+                        android:textSize="18sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/btn_calc"
+                        android:layout_width="150dp"
+                        android:layout_height="89dp"
+                        android:contentDescription="@string/run"
+                        android:src="@drawable/ic_baseline_directions_run_24" />
+
+                    <TextView
+                        android:id="@+id/tv_calc_fertig"
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:background="@color/brackground2"
+                        android:text="@string/notstarted"
+                        android:textAlignment="center"
+                        android:textColor="@color/Schriftfarbe"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_overview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@color/vektor"
+                        android:backgroundTint="@color/vektor"
+                        android:text="@string/open_evaluation"
+                        android:textColor="#000000" />
+
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/tv_hateam"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="30dp"
+                android:text="@string/dev"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_switch"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
             android:clickable="true"
+            android:contentDescription="@string/settings"
             android:focusable="auto"
             android:src="@drawable/ic_baseline_settings_25"
             app:backgroundTint="@color/vektor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="#FFFFFF" />
-
-        <ImageView
-            android:id="@+id/btn_search"
-            android:layout_width="116dp"
-            android:layout_height="83dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="40dp"
-            android:contentDescription="search"
-            android:src="@drawable/ic_baseline_search_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/btn_calc"
-            android:layout_width="120dp"
-            android:layout_height="89dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="56dp"
-            android:contentDescription="run"
-            android:src="@drawable/ic_baseline_directions_run_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_upload" />
-
-        <TextView
-            android:id="@+id/tv_hateam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="31dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/dev"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

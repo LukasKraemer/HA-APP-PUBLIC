@@ -6,26 +6,37 @@
     <PreferenceCategory android:title="API">
 
         <EditTextPreference
-            android:defaultValue="129.168.10.10"
+            android:defaultValue="0.0.0.0"
             android:icon="@drawable/ic_baseline_cloud_upload_24"
             android:key="key_api_ip"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="129.168.10.10"
+            android:summary="0.0.0.0"
             android:title="@string/API_Host" />
         <SwitchPreference
             android:defaultValue="false"
             android:icon="@drawable/ic_baseline_https_24"
-            android:key="key_api_protokoll"
+            android:key="key_api_protocol"
             android:summary="@string/ssl_support"
             android:title="HTTPS?" />
         <EditTextPreference
-            android:defaultValue="0"
+            android:key="username"
+            android:defaultValue="-"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/username" />
+        <EditTextPreference
+            android:key="passwd"
+            android:defaultValue="-"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/passwd" />
+        <EditTextPreference
             android:icon="@drawable/ic_baseline_vpn_key_24"
+            android:defaultValue="0.0.0.0"
             android:key="key_api_token"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="0"
             android:title="Token" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/evo">
@@ -33,7 +44,7 @@
         <EditTextPreference
             android:defaultValue=""
             android:icon="@drawable/ic_baseline_web_24"
-            android:key="key_auswertung_url"
+            android:key="key_overview_url"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary=""
